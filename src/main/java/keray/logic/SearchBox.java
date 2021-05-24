@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -12,27 +13,24 @@ import keray.domain.Food;
 import keray.domain.FoodDataConnection;
 import keray.domain.FoodSearchResult;
 
-
 //class will be responsible for food searching mechanism
 public class SearchBox {
+    private final TableView table;
+    private final FoodDataConnection connect;
+    private Food chosenFood;
 
-    //method returns a table to UI that show searched food
-    public TableView returnSearchBox(String searchedFood) {
-
-        FoodSearchResult result = this.SearchFood(searchedFood);
-
-        TableView table = this.createNewTable(result);
-
-
-        return table;
+    //variablew 1) representing table with search results 2) object connecting with client
+    public SearchBox() {
+        this.table = new TableView();
+        this.connect = new FoodDataConnection();
+        this.chosenFood = null;
     }
 
-    //method will create a new table with search results
-    private TableView createNewTable(FoodSearchResult foodData) {
+
+    //method will format and return the table
+    public TableView createNewTable() {
 
         //creating a table that will display search results and its columns
-        TableView table = new TableView();
-
         TableColumn nameColumn = new TableColumn("Food");
         TableColumn categoryColumn = new TableColumn("Category");
 
@@ -41,8 +39,20 @@ public class SearchBox {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("foodCategory"));
 
         //sizing columns
-        nameColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.6).add(-7.5));
-        categoryColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.4).add(-8));
+        nameColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.6).add(-7.5));
+        categoryColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.4).add(-8));
+
+        //adding ability to pick a food(chosenFood variable) by double click
+        this.table.setRowFactory((rowFunction) -> {
+            TableRow<String> row = new TableRow<>();
+            row.setOnMouseClicked((click) -> {
+                if (click.getClickCount() == 2 && !row.isEmpty()) {
+                    this.chosenFood = (Food) this.table.getSelectionModel().getSelectedItem();
+
+                }
+            });
+            return row;
+        });
 
         //wrapping text inside columns
         nameColumn.setCellFactory((row) -> {
@@ -63,34 +73,45 @@ public class SearchBox {
             return cell;
         });
 
-
-
-
-
         //adding columns to the the table
-        table.getColumns().addAll(nameColumn, categoryColumn);
+        this.table.getColumns().addAll(nameColumn, categoryColumn);
 
-        //converting results into an observable list for
-        ObservableList<Food> foodList = FXCollections.observableArrayList(foodData.getFoodList());
+        return this.table;
+    }
 
+
+
+    //method will update the table with results of the search
+    public void updateSearchBoxResults(String searchedFood) {
+
+        //searching for a food and converting result into proper form
+        FoodSearchResult result = this.getSearchedFoods(searchedFood);
+
+
+        //converting results into an observable list
+        ObservableList<Food> foodList = FXCollections.observableArrayList(result.getFoodList());
 
         //adding search results to the table
-        table.setItems(foodList);
+        this.table.setItems(foodList);
+    }
 
-
-        return table;
+    public Food getChosenFood() {
+        return this.chosenFood;
     }
 
     //method connects to API and returns result as a FoodResultObject
-    private FoodSearchResult SearchFood(String food) {
+    private FoodSearchResult getSearchedFoods(String food) {
+        long startTime = System.nanoTime();
 
-        //connects to API and returns search result in Json form.
-        FoodDataConnection connect = new FoodDataConnection();
-        String JsonSearchResult = connect.searchFood(food);
+        //returns search result in Json form.
+        String JsonSearchResult = this.connect.searchFood(food);
 
         //converting json data into Java objects
         Gson gson = new Gson();
         FoodSearchResult result = gson.fromJson(JsonSearchResult, FoodSearchResult.class);
+        long endTime = System.nanoTime();
+        long totalTime = (endTime - startTime) / 10000000;
+        System.out.println(totalTime);
 
         return result;
     }

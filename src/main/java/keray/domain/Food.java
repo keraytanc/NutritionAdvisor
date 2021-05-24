@@ -1,14 +1,16 @@
 package keray.domain;
 
-
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 public class Food {
     private int fdcId;
     private String description;
     private String foodCategory;
-    private ArrayList<FoodNutrients> foodNutrients;
+    //leaving variable as a Json array for program speed
+    private JsonArray foodNutrients;
 
+    //Methods do get basic information about the food. Used in search table
     public String getDescription() {
         return this.description;
     }
@@ -17,38 +19,42 @@ public class Food {
         return this.foodCategory;
     }
 
+    //Different methods to get Nutritional values of the chosen food.
     public double getKcal() {
-        return getValue(1008);
+        return this.getValue(1008);
     }
 
     public double getProteins() {
-        return getValue(1003);
+        return this.getValue(1003);
     }
 
     public double getFats() {
-        return getValue(1004);
+        return this.getValue(1004);
     }
 
     public double getCarbs() {
-        return getValue(1005);
+        return this.getValue(1005);
     }
 
-
-
-
     //method used to return the value of either kcal, fats, carbs or protein based on nutrientID
-    public double getValue(int number) {
-        for (FoodNutrients nutrient: foodNutrients) {
-            if (nutrient.returnNutrientId() == number) {
+    private double getValue(int nutrientID) {
+
+        for (FoodNutrients nutrient : this.getNutrientsList()) {
+            if (nutrient.returnNutrientId() == nutrientID) {
                 return nutrient.returnValue();
             }
         }
         return -1;
     }
 
+    //method will process Json Array of the Food object to obtain Array of FoodNutritions objects
+    private FoodNutrients[] getNutrientsList() {
 
-    @Override
-    public String toString() {
-        return this.fdcId + " " + this.description + " " + this.foodCategory + " " + this.getKcal();
+        //Creating gson object to create FoodNutrients object from Json
+        Gson gson = new Gson();
+        JsonArray JsonResult = this.foodNutrients;
+
+        //Returning results as an object
+        return gson.fromJson(JsonResult, FoodNutrients[].class);
     }
 }
