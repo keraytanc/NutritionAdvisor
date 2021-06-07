@@ -1,16 +1,11 @@
 package keray.ui;
 
-import javafx.event.Event;
-import javafx.scene.Parent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
-import keray.domain.FoodSearchResult;
-import keray.logic.SearchBox;
+import keray.logic.SearchTable;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -50,7 +45,7 @@ public class AddingFoodUI {
         searchMenu.setPadding(new Insets(0, 0, 20, 0));
 
         //creating food choice frame below top search menu
-        SearchBox tableMechanism = new SearchBox();
+        SearchTable tableMechanism = new SearchTable();
         TableView searchResultList = tableMechanism.createNewTable();
         searchResultList.prefWidthProperty().bind(layout.widthProperty());
         searchResultList.prefHeightProperty().bind(layout.heightProperty().multiply(0.35));
@@ -140,11 +135,21 @@ public class AddingFoodUI {
             //searching for a query and inputing data into table
             tableMechanism.updateSearchBoxResults(newSearch);
 
-
         });
 
 
-        //adding action to the weight text field
+        //adding action to picking up a food from list
+        searchResultList.setOnMouseClicked((click) -> {
+            if (tableMechanism.getChosenFood() != null) {
+
+                Text newChosenFood = chosenFoodText;
+                newChosenFood.setText(tableMechanism.getChosenFood().getDescription());
+                chosenFoodView.setContent(newChosenFood);
+            }
+        });
+
+
+        //adding action to the weight text field. It automatically show macronutrients of the chosen food
         enterFoodWeight.setOnKeyTyped((type) -> {
             try {
                 double weight = 0;
@@ -165,23 +170,35 @@ public class AddingFoodUI {
             }
         });
 
+        //adding chosen food to the list of eaten today
+        addButton.setOnAction((event) -> {
 
 
 
-        //adding action to picking up a food from list
-        searchResultList.setOnMouseClicked((click) -> {
-            if (tableMechanism.getChosenFood() != null) {
+            int eatenFoodsId = tableMechanism.getChosenFood().getId();
+            int eatenFoodsWeight = 0;
 
-                Text newChosenFood = chosenFoodText;
-                newChosenFood.setText(tableMechanism.getChosenFood().getDescription());
-                chosenFoodView.setContent(newChosenFood);
+            if (!enterFoodWeight.getText().isEmpty()) {
+                eatenFoodsWeight = Integer.parseInt(enterFoodWeight.getText());
+
+                //adding food to the user's list
+                if (MainUI.getUser().getEatenToday().containsKey(eatenFoodsId)) {
+                    int eatenAlready = MainUI.getUser().getEatenToday().get(eatenFoodsId);
+                    int newAmount = eatenFoodsWeight + eatenAlready;
+
+                    MainUI.getUser().getEatenToday().put(eatenFoodsId, newAmount);
+                } else {
+                    MainUI.getUser().getEatenToday().put(eatenFoodsId, eatenFoodsWeight);
+                }
             }
+
         });
 
         //creating a Scene object and returning it
         return this.layout;
-
     }
+
+
 
     private void updateNutrients(double weight) {
 

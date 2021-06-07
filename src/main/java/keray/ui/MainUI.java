@@ -1,17 +1,21 @@
 package keray.ui;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import keray.domain.Person;
 
 //class is a representing a main UI: buttons at the top and mechanism to switch between windows
 public class MainUI {
+    private static Person user;
 
-    public BorderPane mainUI() {
+    public MainUI(Person person) {
+        user = person;
+    }
+
+    public BorderPane getMainUI() {
 
         //creating main layout and top menu
         BorderPane layout = new BorderPane();
@@ -57,6 +61,11 @@ public class MainUI {
 
         //Creating new Scene and returning it
         return layout;
+    }
+
+    //method will provide the User to other layers of layout
+    public static Person getUser() {
+        return user;
     }
 }
 

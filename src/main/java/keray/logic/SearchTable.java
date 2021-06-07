@@ -10,17 +10,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import keray.domain.Food;
-import keray.domain.FoodDataConnection;
 import keray.domain.FoodSearchResult;
 
 //class will be responsible for food searching mechanism
-public class SearchBox {
+public class SearchTable {
     private final TableView table;
     private final FoodDataConnection connect;
     private Food chosenFood;
 
-    //variablew 1) representing table with search results 2) object connecting with client
-    public SearchBox() {
+    //variable 1) representing table with search results 2) object connecting with client
+    public SearchTable() {
         this.table = new TableView();
         this.connect = new FoodDataConnection();
         this.chosenFood = null;

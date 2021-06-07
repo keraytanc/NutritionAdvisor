@@ -1,10 +1,11 @@
 package keray.ui;
 
-import javafx.geometry.Insets;
+import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import keray.domain.Person;
+import keray.logic.DbUsers;
 
 public class AddUserUI {
 
@@ -44,12 +45,18 @@ public class AddUserUI {
         chooseLifestyleList.prefWidthProperty().bind(layout.prefWidthProperty().add(-40));
         chooseLifestyleLabel.setStyle("-fx-font-size: 16");
 
+        //Adding option to the ChoiceBox
+        chooseLifestyleList.setItems(FXCollections.observableArrayList("Sedentary", "Normal", "Active"));
+
         //Choose your plans
         Label choosePlansLabel = new Label("Choose your plans:");
         ChoiceBox choosePlansList = new ChoiceBox();
         choosePlansList.prefHeight(25);
         choosePlansList.prefWidthProperty().bind(layout.prefWidthProperty().add(-40));
         choosePlansLabel.setStyle("-fx-font-size: 16");
+
+        //Adding option to the ChoiceBox
+        choosePlansList.setItems(FXCollections.observableArrayList("Reduce weight", "Maintain weight", "Gain weight"));
 
         //Add button
         Button addButton = new Button("Add");
@@ -77,15 +84,25 @@ public class AddUserUI {
         region6.prefHeightProperty().bind(layout.prefHeightProperty().add(30));
 
 
-
-
-
-        //adding action to a button
+        //adding action to a button: adding user
         addButton.setOnAction((event) -> {
-            MainUI mainUI = new MainUI();
+            try {
+                String name = enterNameField.getText();
+                int height = Integer.parseInt(enterHeightField.getText());
+                int weight = Integer.parseInt(enterWeightField.getText());
+                int waist = Integer.parseInt(enterWaistField.getText());
 
-            MotherUI.setInsideMotherLayout(mainUI.mainUI());
+                int multiplier = convertLifeStyleToMultiplier(chooseLifestyleList.getValue().toString());
+                double caloryRate = convertPlansToCaloryRate(choosePlansList.getValue().toString());
 
+                Person newPerson = new Person(name, height, weight, waist, multiplier, caloryRate);
+                DbUsers.addUserToDb(newPerson);
+
+                MainUI mainUI = new MainUI(newPerson);
+                MotherUI.setInsideMotherLayout(mainUI.getMainUI());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
 
@@ -98,4 +115,28 @@ public class AddUserUI {
 
         return layout;
     }
+
+    public int convertLifeStyleToMultiplier(String lifestyle) {
+        int multiplier = 32;
+        if (lifestyle.equals("Sedentary")) {
+            multiplier = 31;
+        } else if (lifestyle.equals("Active")) {
+            multiplier = 33;
+        }
+
+        return multiplier;
+    }
+
+    public double convertPlansToCaloryRate(String plans) {
+        double caloryRate = 1.0;
+
+        if (plans.equals("Reduce weight")) {
+            caloryRate = 0.8;
+        } else if (plans.equals("Gain weight")) {
+            caloryRate = 1.1;
+        }
+
+        return caloryRate;
+    }
+
 }

@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import keray.domain.FoodSearchResult;
+import keray.logic.UsersTable;
 
 //the class creates the mother UI that will shuffle between user interfaces as well as the welcome interface
 public class WelcomeUI {
@@ -48,45 +49,8 @@ public class WelcomeUI {
 
     public TableView createUserTable() {
 
-        //creating new table
-        TableView table = new TableView();
-        //creating a table that will display search results and its columns
-        TableColumn nameColumn = new TableColumn("Users");
-
-
-        //defining data type for the column
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-
-        //sizing columns
-        nameColumn.prefWidthProperty().bind(table.widthProperty().add(-15.5));
-
-
-        //adding ability to pick user by double click
-        table.setRowFactory((rowFunction) -> {
-            TableRow<String> row = new TableRow<>();
-            row.setOnMouseClicked((click) -> {
-                if (click.getClickCount() == 2 && !row.isEmpty()) {
-                    //this.chosenFood = (Food) table.getSelectionModel().getSelectedItem();
-                    //////////CREATE A FUNCTIONALITY
-                }
-            });
-            return row;
-        });
-
-        //wrapping text inside columns
-        nameColumn.setCellFactory((row) -> {
-            TableCell<FoodSearchResult, String> cell = new TableCell<>();
-            Text text = new Text();
-            cell.setGraphic(text);
-            text.wrappingWidthProperty().bind(nameColumn.widthProperty());
-            text.textProperty().bind(cell.itemProperty());
-            return cell;
-        });
-
-
-        //adding columns to the the table
-        table.getColumns().add(nameColumn);
+        UsersTable usersTable = new UsersTable();
+        TableView table = usersTable.createNewTable();
 
         return table;
     }

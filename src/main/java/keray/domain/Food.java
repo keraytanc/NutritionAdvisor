@@ -14,7 +14,6 @@ public class Food {
     public String getDescription() {
         return this.description;
     }
-
     public String getFoodCategory() {
         return this.foodCategory;
     }
@@ -23,18 +22,18 @@ public class Food {
     public double getKcal() {
         return this.getValue(1008);
     }
-
     public double getProteins() {
         return this.getValue(1003);
     }
-
     public double getFats() {
         return this.getValue(1004);
     }
-
     public double getCarbs() {
         return this.getValue(1005);
     }
+
+    //getting ID
+    public Integer getId() { return this.fdcId; }
 
     //method used to return the value of either kcal, fats, carbs or protein based on nutrientID
     private double getValue(int nutrientID) {

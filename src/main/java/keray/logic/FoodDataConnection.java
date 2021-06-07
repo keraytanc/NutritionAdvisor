@@ -1,4 +1,4 @@
-package keray.domain;
+package keray.logic;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

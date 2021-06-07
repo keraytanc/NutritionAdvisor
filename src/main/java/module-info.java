@@ -5,5 +5,6 @@ module keray {
     exports keray;
     //Adding elements to the searchbox required opening package to javafx.base
     opens keray.domain to javafx.base;
+    opens keray.logic to javafx.base;
 
 }
