@@ -1,2 +1,7 @@
 Sprawić aby przypadkiem nie dodawało się podwojnie posilki w AddingFoodUI. Pewnym tropem(ale niewystaczajacym)
 jest setonmouseclicked
+
+Ogarnac tabelke ze zjedzonym jedzeniem. Aby wyswietlala sie nazwa jedzenia a nie tylko ID. Moze bedzie trzeba
+dodac nowa zmienna? Np. Food
+
+Dokonczyc modyfikowanie checkIfFoodListValid

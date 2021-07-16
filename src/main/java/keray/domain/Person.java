@@ -19,7 +19,7 @@ public class Person {
     private int minProtein;
     private int minCarbs;
     private int minFats;
-    private HashMap<Integer, Integer> eatenToday;
+    private ArrayList<EatenFoodData> eatenToday;
 
     public Person(String name, int height, int weight, int waistCircumference, int multiplier, double caloryRate) {
         this.id = 0;
@@ -39,7 +39,7 @@ public class Person {
         this.minProtein = Math.toIntExact(Math.round(weight * 1.8));
         this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * caloryRate));
         this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * caloryRate));
-        this.eatenToday = new HashMap<>();
+        this.eatenToday = new ArrayList<>();
     }
 
     //Getters
@@ -70,7 +70,7 @@ public class Person {
     public double getCaloryRate() { return caloryRate; }
     public int getMultiplier() { return multiplier; }
     public int getId() { return id; }
-    public HashMap<Integer, Integer> getEatenToday() { return eatenToday; }
+    public ArrayList<EatenFoodData> getEatenToday() { return eatenToday; }
 
     //ID setter
     public void setId(int id) { this.id = id; }
@@ -81,11 +81,12 @@ public class Person {
         this.changeIntake();
     }
 
+    //updating waist circumference
     public void setWaist(int waist) {
         this.waistCircumference = waist;
     }
 
-    //other methods required by application
+    //method returning bodyfat of a person according to a formula developed by academics
     public double getBodyFat() {
         double bf = 64 - (20* (1.0 * this.height/this.waistCircumference));
 
@@ -99,9 +100,7 @@ public class Person {
     //adding to a kcal intake
     public void addIntake(int percent) {
         this.caloryRate = 1 + (1.0 * percent/100);
-        this.toString();
         this.changeIntake();
-        this.toString();
     }
 
     //method will be used to set multiplier according to lifestyle(31 for sedentary, 33 for active and 32 for average)
@@ -135,6 +134,74 @@ public class Person {
         this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * this.caloryRate));
         this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * this.caloryRate));
     }
+
+    //adding to the list of Foods eaten today
+    public void addEatenFood(int id, int weight) {
+        EatenFoodData eatenFoodToAdd = new EatenFoodData(id, weight);
+        this.eatenToday.add(eatenFoodToAdd);
+    }
+
+    //deleting food from the list
+    public void deleteFoodFromList(EatenFoodData food) {
+        for (EatenFoodData foodFromList: this.eatenToday) {
+            if (food.equals(foodFromList)) {
+                this.eatenToday.remove(foodFromList);
+                break;
+            }
+        }
+    }
+
+    //String representation of the eaten foods list for the database
+    public String listAsAString() {
+
+        StringBuilder list = new StringBuilder();
+        for (EatenFoodData food: this.eatenToday){
+            if (list.toString().isEmpty()) {
+                list.append(food);
+            } else {
+                list.append(" " + food);
+            }
+        }
+        return list.toString();
+    }
+
+    //amount of micronutrients eaten today
+    public int getKcalEatenToday() {
+        int kcalEaten = 0;
+        for (EatenFoodData food: this.eatenToday) {
+            int eaten = (int) Math.round(food.getFood().getKcal() * (1.0 * food.getWeight() / 100));
+            kcalEaten = kcalEaten + eaten;
+        }
+        return kcalEaten;
+    }
+
+    public int getProtEatenToday() {
+        int protEaten = 0;
+        for (EatenFoodData food: this.eatenToday) {
+            int eaten = (int) Math.round(food.getFood().getProteins() * (1.0 * food.getWeight() / 100));
+            protEaten = protEaten + eaten;
+        }
+        return protEaten;
+    }
+
+    public int getFatEatenToday() {
+        int fatEaten = 0;
+        for (EatenFoodData food: this.eatenToday) {
+            int eaten = (int) Math.round(food.getFood().getFats() * (1.0 * food.getWeight() / 100));
+            fatEaten = fatEaten + eaten;
+        }
+        return fatEaten;
+    }
+
+    public int getCarbEatenToday() {
+        int carbEaten = 0;
+        for (EatenFoodData food: this.eatenToday) {
+            int eaten = (int) Math.round(food.getFood().getCarbs() * (1.0 * food.getWeight() / 100));
+            carbEaten = carbEaten + eaten;
+        }
+        return carbEaten;
+    }
+
 
     //toString method to check users for testing
     @Override

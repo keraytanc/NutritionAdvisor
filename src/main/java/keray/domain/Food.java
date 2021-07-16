@@ -18,7 +18,7 @@ public class Food {
         return this.foodCategory;
     }
 
-    //Different methods to get Nutritional values of the chosen food.
+    //Different methods to get Nutritional values of the chosen food(each micronutrient type has ID).
     public double getKcal() {
         return this.getValue(1008);
     }

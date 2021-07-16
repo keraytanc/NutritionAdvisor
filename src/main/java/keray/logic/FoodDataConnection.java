@@ -1,5 +1,9 @@
 package keray.logic;
 
+import com.google.gson.Gson;
+import keray.domain.Food;
+import keray.domain.FoodSearchResult;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,35 +19,65 @@ import java.util.zip.GZIPInputStream;
 //class will be used to establish connection and request data from Food database
 public class FoodDataConnection {
 
-    private final String myApiKey;
-    private final HttpClient connection;
+    private static final String myApiKey = "nn7WaPzGuNCVANMKQ4C5wVF1Tg0SfgEkC9E6KnhV";
+    private static final HttpClient connection = HttpClient.newHttpClient();
 
-    public FoodDataConnection() {
-        this.myApiKey = "nn7WaPzGuNCVANMKQ4C5wVF1Tg0SfgEkC9E6KnhV";
-        this.connection = HttpClient.newHttpClient();
-    }
 
     //method will search for a given food
-    public String searchFood(String food) {
+    public FoodSearchResult searchFood(String food) {
+
+        //creating URI
+        URI searchUri = convertQueryIntoUri(food);
+        String result = sendQuery(searchUri);
+
+        //converting json data into Java objects
+        Gson gson = new Gson();
+        FoodSearchResult searchedFood = gson.fromJson(result, FoodSearchResult.class);
+
+        return searchedFood;
+
+    }
+    //METODA FUNKCJONUJE NIEPOPRAWNIE POPRZEZ SYNTAX JSONA
+/*
+    //the method will get the food according to its ID
+    public static Food getFood(int ID) {
+
+        //creating URI with proper request
+        URI getFoodUri = URI.create("https://api.nal.usda.gov/fdc/v1/food/" + ID + "?api_key=" + myApiKey);
+
+        //result as a string
+        String stringResult = sendQuery(getFoodUri);
+
+        //converting json data into Java objects
+        Gson gson = new Gson();
+        System.out.println("1");
+        System.out.println(stringResult);
+        Food result = gson.fromJson(stringResult, Food.class);
+        System.out.println("2");
+        System.out.println(result.getDescription());
+
+        return result;
+
+    }
+
+ */
+
+    //method will efficiently send a query and return result as a String
+    private String sendQuery(URI uri) {
 
         //method might throw exception
         try {
-            //creating URI
-            URI searchUri = convertQueryIntoUri(food);
-
-            //establishing connection
-            //HttpClient connection = HttpClient.newHttpClient();
 
             //defining request
             HttpRequest request = HttpRequest.newBuilder()
                     .header("Accept-Encoding", "gzip")
-                    .uri(searchUri)
+                    .uri(uri)
                     .GET()
                     .build();
 
             //sending request and returning the result in the form of String
             //creating a Stream of bytes of GZip stream
-            InputStream myStream = this.connection.send(request, HttpResponse.BodyHandlers.ofInputStream()).body();
+            InputStream myStream = connection.send(request, HttpResponse.BodyHandlers.ofInputStream()).body();
 
             //branding the stream as Gzip Stream
             GZIPInputStream response = new GZIPInputStream(myStream);
@@ -71,10 +105,11 @@ public class FoodDataConnection {
         } catch (Exception e) {
             return "incorrect query or connection error";
         }
+
     }
 
-    //the method will convert inputted food query into a part of URI address
-    public URI convertQueryIntoUri(String query) {
+    //the method will convert inputted food query into a part of URI address for a food search
+    private URI convertQueryIntoUri(String query) {
 
         //dividing input in to an array consisting of words
         String[] foodArray = query.split(" +");

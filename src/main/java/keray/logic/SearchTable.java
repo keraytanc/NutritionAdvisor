@@ -78,8 +78,6 @@ public class SearchTable {
         return this.table;
     }
 
-
-
     //method will update the table with results of the search
     public void updateSearchBoxResults(String searchedFood) {
 
@@ -100,19 +98,7 @@ public class SearchTable {
 
     //method connects to API and returns result as a FoodResultObject
     private FoodSearchResult getSearchedFoods(String food) {
-        long startTime = System.nanoTime();
-
-        //returns search result in Json form.
-        String JsonSearchResult = this.connect.searchFood(food);
-
-        //converting json data into Java objects
-        Gson gson = new Gson();
-        FoodSearchResult result = gson.fromJson(JsonSearchResult, FoodSearchResult.class);
-        long endTime = System.nanoTime();
-        long totalTime = (endTime - startTime) / 10000000;
-        System.out.println(totalTime);
-
-        return result;
+        return this.connect.searchFood(food);
     }
 
 }

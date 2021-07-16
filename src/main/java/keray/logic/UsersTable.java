@@ -25,10 +25,11 @@ public class UsersTable {
         //defining data type for each column
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+
         //sizing columns
         nameColumn.prefWidthProperty().bind(MotherUI.getMotherLayout().widthProperty().add(-65));
 
-        //adding ability to pick a food(chosenFood variable) by double click
+        //adding ability to pick a user by double click
         table.setRowFactory((rowFunction) -> {
             TableRow<String> row = new TableRow<>();
             row.setOnMouseClicked((click) -> {

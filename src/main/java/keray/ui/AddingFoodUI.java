@@ -1,6 +1,8 @@
 package keray.ui;
 
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import keray.domain.EatenFoodData;
 import keray.logic.SearchTable;
 
 import javafx.geometry.Insets;
@@ -8,6 +10,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import keray.logic.EatenFoodTable;
 
 public class AddingFoodUI {
     private VBox layout;
@@ -48,7 +51,7 @@ public class AddingFoodUI {
         SearchTable tableMechanism = new SearchTable();
         TableView searchResultList = tableMechanism.createNewTable();
         searchResultList.prefWidthProperty().bind(layout.widthProperty());
-        searchResultList.prefHeightProperty().bind(layout.heightProperty().multiply(0.35));
+        searchResultList.prefHeightProperty().bind(layout.heightProperty().multiply(0.30));
 
         //creating add Menu
         HBox addMenu = new HBox();
@@ -122,8 +125,70 @@ public class AddingFoodUI {
         //FOOD DATA MENU: adding all the elements
         statsMenu.getChildren().addAll(kcalLabel, horizontalSeparator, bottomStatsMenu);
 
+        //Menu managing food eaten today
+        HBox eatenFoodsMenu = new HBox();
+        eatenFoodsMenu.setSpacing(10);
+
+        //Table of foods eaten today
+        EatenFoodTable eatenFoodTableObject = new EatenFoodTable();
+        TableView eatenFoodTable = eatenFoodTableObject.createNewTable();
+        eatenFoodTable.prefWidthProperty().bind(layout.widthProperty().add(-60));
+        eatenFoodTable.prefHeightProperty().bind(layout.heightProperty().multiply(0.25));
+        eatenFoodTableObject.updateEatenFoodTable();
+
+        //Button to delete a food from the list
+        Button deleteFromEatenButton = new Button();
+        deleteFromEatenButton.prefHeightProperty().bind(eatenFoodTable.heightProperty());
+        deleteFromEatenButton.setPrefWidth(50);
+
+        //text on the button
+        Label textOnButton = new Label("DELETE");
+        textOnButton.setWrapText(true);
+        textOnButton.setMinWidth(1);
+        textOnButton.setMaxWidth(1);
+
+        //setting text on the button and adding elements to the foods menu
+        deleteFromEatenButton.setGraphic(textOnButton);
+        eatenFoodsMenu.getChildren().addAll(eatenFoodTable, deleteFromEatenButton);
+
+        //Progress menu
+        HBox progressMenu = new HBox();
+        progressMenu.setSpacing(10);
+
+        VBox progressLabels = new VBox();
+        VBox progressBars = new VBox();
+        VBox progressNumerical = new VBox();
+
+
+        //Labels for the progress menu
+        Label kcalProgressLabel = new Label("Kcal consumed: ");
+        Label protProgressLabel = new Label("Proteins consumed: ");
+        Label fatProgressLabel = new Label("Fats consumed: ");
+        Label carbProgressLabel = new Label("Carbs consumed: ");
+
+        //progress bars
+        ProgressBar kcalBar = new ProgressBar(MainUI.getUser().getKcalEatenToday() / MainUI.getUser().getKcalDemand());
+        ProgressBar protBar = new ProgressBar(MainUI.getUser().getProtEatenToday() / MainUI.getUser().getMinProtein());
+        ProgressBar fatBar = new ProgressBar(MainUI.getUser().getFatEatenToday() / MainUI.getUser().getMinFats());
+        ProgressBar carbBar = new ProgressBar(MainUI.getUser().getCarbEatenToday() / MainUI.getUser().getMinCarbs());
+
+        //Labels with numerical progress
+        Label kcalEatenLabel = new Label(MainUI.getUser().getKcalEatenToday() + "/" + MainUI.getUser().getKcalDemand());
+        Label protEatenLabel = new Label(MainUI.getUser().getProtEatenToday() + "/" + MainUI.getUser().getMinProtein());
+        Label fatEatenLabel = new Label(MainUI.getUser().getFatEatenToday() + "/" + MainUI.getUser().getMinFats());
+        Label carbEatenLabel = new Label(MainUI.getUser().getCarbEatenToday() + "/" + MainUI.getUser().getMinCarbs());
+
+        //Adding elements to the menu
+        progressLabels.getChildren().addAll(kcalProgressLabel, protProgressLabel, fatProgressLabel, carbProgressLabel);
+        progressBars.getChildren().addAll(kcalBar, protBar, fatBar, carbBar);
+        progressNumerical.getChildren().addAll(kcalEatenLabel, protEatenLabel, fatEatenLabel, carbEatenLabel);
+
+        progressMenu.getChildren().addAll(progressLabels, progressBars, progressNumerical);
+
+
         //adding everything to the layout
-        this.layout.getChildren().addAll(enterTheFoodLabel, searchMenu, searchResultList, addMenu, statsMenu);
+        this.layout.getChildren().addAll(enterTheFoodLabel, searchMenu, searchResultList, addMenu, statsMenu,
+                eatenFoodsMenu, progressMenu);
 
 
         //adding action to a search food button
@@ -173,36 +238,67 @@ public class AddingFoodUI {
         //adding chosen food to the list of eaten today
         addButton.setOnAction((event) -> {
 
-
-
             int eatenFoodsId = tableMechanism.getChosenFood().getId();
             int eatenFoodsWeight = 0;
 
             if (!enterFoodWeight.getText().isEmpty()) {
                 eatenFoodsWeight = Integer.parseInt(enterFoodWeight.getText());
 
-                //adding food to the user's list
-                if (MainUI.getUser().getEatenToday().containsKey(eatenFoodsId)) {
-                    int eatenAlready = MainUI.getUser().getEatenToday().get(eatenFoodsId);
-                    int newAmount = eatenFoodsWeight + eatenAlready;
-
-                    MainUI.getUser().getEatenToday().put(eatenFoodsId, newAmount);
-                } else {
-                    MainUI.getUser().getEatenToday().put(eatenFoodsId, eatenFoodsWeight);
-                }
+                //adding food to the list
+                EatenFoodData eatenFood = new EatenFoodData(eatenFoodsId, eatenFoodsWeight);
+                MainUI.getUser().addEatenFood(eatenFoodsId, eatenFoodsWeight);
+                eatenFoodTableObject.updateEatenFoodTable();
+                this.updateProgress(progressMenu);
+                System.out.println(MainUI.getUser().listAsAString());
             }
 
+        });
+
+        //deleting food from the list of eaten today
+        deleteFromEatenButton.setOnAction((event) -> {
+            if (eatenFoodTableObject.getFoodToDelete() != null) {
+                MainUI.getUser().deleteFoodFromList(eatenFoodTableObject.getFoodToDelete());
+                eatenFoodTableObject.updateEatenFoodTable();
+                eatenFoodTableObject.setFoodToDeleteAsNull();
+                this.updateProgress(progressMenu);
+
+            }
         });
 
         //creating a Scene object and returning it
         return this.layout;
     }
 
+    //method will update progress menu
+    public void updateProgress(HBox progressMenu) {
 
+        //acessing internal VBox layouts
+        VBox progressBars = (VBox) progressMenu.getChildren().get(1);
+        VBox progressNumerical = (VBox) progressMenu.getChildren().get(2);
 
-    private void updateNutrients(double weight) {
+        //accesing progress bars from first internal layout
+        ProgressBar kcalBar = (ProgressBar) progressBars.getChildren().get(0);
+        ProgressBar protBar = (ProgressBar) progressBars.getChildren().get(1);
+        ProgressBar fatBar = (ProgressBar) progressBars.getChildren().get(2);
+        ProgressBar carbBar = (ProgressBar) progressBars.getChildren().get(3);
 
+        //updating values for the bars
+        kcalBar.setProgress(1.0 * MainUI.getUser().getKcalEatenToday() / MainUI.getUser().getKcalDemand());
+        protBar.setProgress(1.0 * MainUI.getUser().getProtEatenToday() / MainUI.getUser().getMinProtein());
+        fatBar.setProgress(1.0 * MainUI.getUser().getFatEatenToday() / MainUI.getUser().getMinFats());
+        carbBar.setProgress(1.0 * MainUI.getUser().getCarbEatenToday() / MainUI.getUser().getMinCarbs());
+
+        //accessing numerical progress labels
+        Label kcalLabel = (Label) progressNumerical.getChildren().get(0);
+        Label protLabel = (Label) progressNumerical.getChildren().get(1);
+        Label fatLabel = (Label) progressNumerical.getChildren().get(2);
+        Label carbLabel = (Label) progressNumerical.getChildren().get(3);
+
+        //updating values for the labels
+        kcalLabel.setText(MainUI.getUser().getKcalEatenToday() + "/" + MainUI.getUser().getKcalDemand());
+        protLabel.setText(MainUI.getUser().getProtEatenToday() + "/" + MainUI.getUser().getMinProtein());
+        fatLabel.setText(MainUI.getUser().getFatEatenToday() + "/" + MainUI.getUser().getMinFats());
+        carbLabel.setText(MainUI.getUser().getCarbEatenToday() + "/" + MainUI.getUser().getMinCarbs());
     }
-
 
 }
