@@ -39,7 +39,7 @@ public class EatenFoodTable {
         this.table.setRowFactory((rowFunction) -> {
             TableRow<String> row = new TableRow<>();
             row.setOnMouseClicked((click) ->{
-                if (click.getClickCount() == 2 && !row.isEmpty()) {
+                if (!row.isEmpty()) {
                     this.foodToDelete = (EatenFoodData) this.table.getSelectionModel().getSelectedItem();
                 }
             });

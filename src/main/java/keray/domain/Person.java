@@ -1,5 +1,7 @@
 package keray.domain;
 
+import keray.logic.DbUsers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

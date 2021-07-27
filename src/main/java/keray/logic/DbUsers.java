@@ -3,12 +3,15 @@ package keray.logic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.converter.LocalDateStringConverter;
+import keray.domain.EatenFoodData;
 import keray.domain.Person;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 //class will retieve and add users to DB
 public class DbUsers {
@@ -104,8 +107,51 @@ public class DbUsers {
         DbConnector.updateValueInDb(dbUpdateQuery);
     }
 
-    //method will check if food list in the database is up to date and reset it if not.
-    private static String checkIfFoodListValid(int id, String lastDate) {
+    //method will retrieve an ArrayList of foods eaten today from the database
+    public static ArrayList<EatenFoodData> retrieveEatenFoodsFromDb(Person person) {
+
+        //new ArrayList
+        ArrayList<EatenFoodData> eatenFood = new ArrayList<>();
+
+        //String retrieved from Database
+        String foodListAsString = returnEatenFoodsAsString(person);
+
+        //if the String is empty, an empty Arraylist is returned. Otherwise list of foods is returned
+        if (foodListAsString.isEmpty()) {
+            return eatenFood;
+        } else {
+
+            //Getting a list of String convertible to the EatenFoodData object(each object is separated by space)
+            List<String> eatenFoods = Arrays.asList(foodListAsString.split(" "));
+
+            //turning each String object into EatenFoodData object(each object consist of id and its weight separated by comma)
+            eatenFoods.stream()
+                    .map(string -> string.split(","))
+                    .map(array -> new EatenFoodData(Integer.valueOf(array[0]), Integer.valueOf(array[1])))
+                    .forEach(object -> eatenFood.add(object));
+
+            //returning the updated list of eaten foods
+            return eatenFood;
+        }
+
+    }
+
+    //method will check if food list in the database is up to date and reset it if not and return list of foods eaten today
+    private static String returnEatenFoodsAsString(Person person) {
+
+        //getting users ID
+        int id = person.getId();
+
+        //getting the date of the last update from User's database
+        String lastDate = "";
+        String lastDateQuery = "SELECT lastdate FROM users WHERE idusers = " + id + ";";
+        ResultSet resultDate = DbConnector.selectQuery(lastDateQuery);
+        try {
+            resultDate.next();
+            lastDate = resultDate.getString("lastdate");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         //getting todays date
         LocalDateStringConverter dateToStringCoverter = new LocalDateStringConverter();
@@ -115,10 +161,15 @@ public class DbUsers {
         if (lastDate.equals(todaysDate)) {
 
             //if true method returns current food list
+            String foodList = "";
             String dbQuery = "SELECT eatenfood FROM users WHERE idusers = " + id + ";";
-            ResultSet result = DbConnector.selectQuery(dbQuery);
-            result.next();
-            String foodList = result.getString("eatenfood");
+            ResultSet resultFoodList = DbConnector.selectQuery(dbQuery);
+            try {
+                resultFoodList.next();
+                foodList = resultFoodList.getString("eatenfood");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             return foodList;
         } else {
 
@@ -128,6 +179,5 @@ public class DbUsers {
             return "";
 
         }
-
     }
 }
