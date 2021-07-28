@@ -33,7 +33,7 @@ public class UserUI {
         layout.setPadding(new Insets(10, 0, 0, 0));
         layout.setPrefSize(360, 610);
         layout.setMinSize(200, 420);
-        layout.spacingProperty().bind(layout.heightProperty().add(-400).multiply(0.22));
+        layout.spacingProperty().bind(layout.heightProperty().add(-400).multiply(0.15));
         layout.setAlignment(Pos.TOP_CENTER);
 
         //creating top Labels
@@ -41,7 +41,9 @@ public class UserUI {
         Label nameLabel = new Label(chosenPerson.getName());
         nameLabel.setStyle("-fx-font-size: 24");
         Label heightLabel = new Label("Height: " + chosenPerson.getHeight() + "cm");
-        nameLabelMenu.getChildren().addAll(nameLabel, heightLabel);
+        Label weightLabel = new Label("Weight: " + chosenPerson.getWeight() + "kg");
+        Label waistLabel = new Label("Waist circumference: " + chosenPerson.getWaistCircumference() + "cm");
+        nameLabelMenu.getChildren().addAll(nameLabel, heightLabel, weightLabel, waistLabel);
         nameLabelMenu.setAlignment(Pos.CENTER);
 
         layout.getChildren().add(nameLabelMenu);
@@ -58,29 +60,6 @@ public class UserUI {
 
         Button updateWeightButton = new Button("Update");
         Button updateWaistButton = new Button("Update");
-
-        //adding actions to the buttons
-        updateWeightButton.setOnAction((event) -> {
-
-            int weight = Integer.parseInt(weightField.getText());
-            chosenPerson.setWeight(weight);
-            this.updateNutritionLabels();
-
-            DbUsers.updateWeight(chosenPerson, weight);
-
-        });
-
-        updateWaistButton.setOnAction((event) -> {
-
-            int waist = Integer.parseInt(waistField.getText());
-
-            chosenPerson.setWaist(waist);
-            this.updateBodyFatLabel();
-
-            DbUsers.updateWaist(chosenPerson, waist);
-
-
-        });
 
         updateWeightButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.5).add(-5));
         updateWaistButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.5).add(-5));
@@ -111,30 +90,6 @@ public class UserUI {
         adjustKcalMenu.getChildren().addAll(lowerDemandButton, resetDemandButton, raiseDemandButton);
         layout.getChildren().add(adjustKcalMenu);
 
-        //adding action to the buttons
-        lowerDemandButton.setOnAction((event) -> {
-            chosenPerson.lowerMultiplier();
-
-            int multiplier = chosenPerson.getMultiplier();
-            DbUsers.updateMultiplier(chosenPerson, multiplier);
-            this.updateNutritionLabels();
-        });
-
-        resetDemandButton.setOnAction((event) -> {
-            chosenPerson.resetMultiplier();
-
-            int multiplier = 32;
-            DbUsers.updateMultiplier(chosenPerson, multiplier);
-            this.updateNutritionLabels();
-        });
-
-        raiseDemandButton.setOnAction((event) -> {
-            chosenPerson.raiseMultiplier();
-
-            int multiplier = chosenPerson.getMultiplier();
-            DbUsers.updateMultiplier(chosenPerson, multiplier);
-            this.updateNutritionLabels();
-        });
 
         //creating the label depicting current body fat and nutritional advice
         VBox adviceMenu = new VBox();
@@ -150,11 +105,11 @@ public class UserUI {
                 "-fx-border-color: #D3D3D3;" +
                 "-fx-background-color: white;" +
                 "-fx-effect: dropshadow(three-pass-box, gray, 2, 0, 0, 0)");
-        adviceField.setPrefHeight(80);
+        adviceField.setPrefHeight(60);
         adviceField.prefWidthProperty().bind(layout.widthProperty());
-        Text adviceText = new Text();
-        adviceText.wrappingWidthProperty().bind(adviceField.widthProperty().add(-20));
-        adviceField.setContent(adviceText);
+        this.updateAdviceField(adviceField);
+
+
 
         adviceMenu.getChildren().addAll(this.bodyFatLabel, adviceField);
         layout.getChildren().add(adviceMenu);
@@ -181,21 +136,6 @@ public class UserUI {
             initialChoice = "Gain weight";
         }
         choosePlansList.setValue(initialChoice);
-
-        //adding to the menu option of changing the plans
-        choosePlansList.getSelectionModel().selectedItemProperty().addListener((change, oldValue, newValue) -> {
-            int kcalChangeInPercent = 0;
-            if (newValue.equals("Reduce weight")) {
-                kcalChangeInPercent = -20;
-            } else if (newValue.equals("Gain weight")) {
-                kcalChangeInPercent = 10;
-            }
-            chosenPerson.addIntake(kcalChangeInPercent);
-            this.updateNutritionLabels();
-
-            DbUsers.updateCaloryRate(chosenPerson);
-        });
-
 
         plansMenu.getChildren().addAll(choosePlansLabel, choosePlansList);
         layout.getChildren().add(plansMenu);
@@ -237,18 +177,116 @@ public class UserUI {
 
         layout.getChildren().add(kcalDemandMenu);
 
+        //adding to the menu option of changing the plans
+        choosePlansList.getSelectionModel().selectedItemProperty().addListener((change, oldValue, newValue) -> {
+            int kcalChangeInPercent = 0;
+            if (newValue.equals("Reduce weight")) {
+                kcalChangeInPercent = -20;
+            } else if (newValue.equals("Gain weight")) {
+                kcalChangeInPercent = 10;
+            }
+            chosenPerson.addIntake(kcalChangeInPercent);
+            this.updateNutritionLabels();
+
+            DbUsers.updateCaloryRate(chosenPerson);
+        });
+
+        //adding action to the buttons responsible for total nutritional demand
+        lowerDemandButton.setOnAction((event) -> {
+            chosenPerson.lowerMultiplier();
+
+            int multiplier = chosenPerson.getMultiplier();
+            DbUsers.updateMultiplier(chosenPerson, multiplier);
+            this.updateNutritionLabels();
+        });
+
+        resetDemandButton.setOnAction((event) -> {
+            chosenPerson.resetMultiplier();
+
+            int multiplier = 32;
+            DbUsers.updateMultiplier(chosenPerson, multiplier);
+            this.updateNutritionLabels();
+        });
+
+        raiseDemandButton.setOnAction((event) -> {
+            chosenPerson.raiseMultiplier();
+
+            int multiplier = chosenPerson.getMultiplier();
+            DbUsers.updateMultiplier(chosenPerson, multiplier);
+            this.updateNutritionLabels();
+        });
+
+        //adding actions to the buttons updating weight and waist circumference
+        updateWeightButton.setOnAction((event) -> {
+
+            try {
+                int weight = Integer.parseInt(weightField.getText());
+                chosenPerson.setWeight(weight);
+                this.updateNutritionLabels();
+                weightLabel.setText("Weight: " + chosenPerson.getWeight() + "kg");
+                DbUsers.updateWeight(chosenPerson, weight);
+            } catch (Exception e) {
+                MainUI.errorDialogBox();
+            }
+        });
+
+        updateWaistButton.setOnAction((event) -> {
+
+            try {
+                int waist = Integer.parseInt(waistField.getText());
+                chosenPerson.setWaist(waist);
+                this.updateBodyFatLabel();
+                waistLabel.setText("Waist circumference: " + chosenPerson.getWaistCircumference() + "cm");
+                DbUsers.updateWaist(chosenPerson, waist);
+                this.updateAdviceField(adviceField);
+            } catch (Exception e) {
+                MainUI.errorDialogBox();
+            }
+        });
 
         return layout;
     }
 
-    public void updateNutritionLabels() {
+
+
+    private void updateNutritionLabels() {
         this.kcalLabel.setText("Max kcal: " + chosenPerson.getKcalDemand());
         this.proteinLabel.setText("Min prot: " + chosenPerson.getMinProtein());
         this.fatLabel.setText("Min fats: " + chosenPerson.getMinFats());
         this.carbLabel.setText("Min carbs: " + chosenPerson.getMinCarbs());
     }
 
-    public void updateBodyFatLabel() {
+    private void updateBodyFatLabel() {
         this.bodyFatLabel.setText("Your current bodyfat: " + chosenPerson.getBodyFat() + "%");
+    }
+
+    //method will update Advice field with current nutritional advice
+    private void updateAdviceField(ScrollPane adviceField) {
+        Text advice = new Text(this.formulateAdvice());
+        advice.wrappingWidthProperty().bind(adviceField.widthProperty().add(-20));
+        adviceField.setContent(advice);
+    }
+
+    //method will formulate a nutritional advice according to body fat level
+    private String formulateAdvice() {
+
+        double bodyFat = this.chosenPerson.getBodyFat();
+
+        String advice = "You are obesse. Your fat level is very unhealthy and might lead to various diseases. " +
+                "loose your weight urgently";
+
+        if (bodyFat < 12) {
+            advice = "Your fat level is much below healthy levels. You should urgently gain weight and contact a doctor";
+        } else if (bodyFat < 16.5) {
+            advice = "Your fat level is too low and might be unhealthy if kept for extended periods of time. " +
+                    "Gain weight.";
+        } else if (bodyFat < 20) {
+            advice = "You are a fit person. Fat level between 20% and 26% is optimal for health " +
+             "and aestherics. Your aim should be to maintain current fat level.";
+        } else if (bodyFat < 26) {
+            advice = "You are overweight. You should loose weight. Start your diet";
+        }
+
+        return advice;
     }
 }

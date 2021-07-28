@@ -3,6 +3,7 @@ package keray.ui;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 
 public class ParentUI {

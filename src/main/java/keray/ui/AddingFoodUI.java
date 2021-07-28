@@ -13,9 +13,11 @@ import keray.logic.EatenFoodTable;
 
 public class AddingFoodUI {
     private VBox layout;
+    public HBox progressMenu;
 
     public AddingFoodUI() {
         this.layout = new VBox();
+        this.progressMenu = new HBox();
     }
 
     public VBox getAddingFoodUI() {
@@ -151,8 +153,7 @@ public class AddingFoodUI {
         eatenFoodsMenu.getChildren().addAll(eatenFoodTable, deleteFromEatenButton);
 
         //Progress menu
-        HBox progressMenu = new HBox();
-        progressMenu.setSpacing(10);
+        this.progressMenu.setSpacing(10);
 
         VBox progressLabels = new VBox();
         VBox progressBars = new VBox();
@@ -217,8 +218,10 @@ public class AddingFoodUI {
         enterFoodWeight.setOnKeyTyped((type) -> {
             try {
                 double weight = 0;
-                if (!enterFoodWeight.getText().isEmpty()) {
+                try {
                     weight = Double.parseDouble(enterFoodWeight.getText());
+                } catch (Exception e) {
+                    weight = 0;
                 }
 
                 double kcal = tableMechanism.getChosenFood().getKcal() * (weight/100);
@@ -240,7 +243,7 @@ public class AddingFoodUI {
 
             int eatenFoodsId = tableMechanism.getChosenFood().getId();
 
-            if (!enterFoodWeight.getText().isEmpty()) {
+            try {
                 int eatenFoodsWeight = Integer.parseInt(enterFoodWeight.getText());
 
                 //adding food to the list
@@ -248,7 +251,8 @@ public class AddingFoodUI {
                 DbUsers.updateEatenFoodsInDb(MainUI.getUser(), MainUI.getUser().listAsAString());
                 eatenFoodTableObject.updateEatenFoodTable();
                 this.updateProgress(progressMenu);
-
+            } catch (Exception e) {
+                MainUI.errorDialogBox();
             }
 
         });
@@ -260,7 +264,7 @@ public class AddingFoodUI {
                 DbUsers.updateEatenFoodsInDb(MainUI.getUser(), MainUI.getUser().listAsAString());
                 eatenFoodTableObject.updateEatenFoodTable();
                 eatenFoodTableObject.setFoodToDeleteAsNull();
-                this.updateProgress(progressMenu);
+                this.updateProgress(this.progressMenu);
 
             }
         });

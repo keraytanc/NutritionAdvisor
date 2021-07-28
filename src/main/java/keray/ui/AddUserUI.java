@@ -101,7 +101,8 @@ public class AddUserUI {
                 MainUI mainUI = new MainUI(newPerson);
                 ParentUI.setInsideParentLayout(mainUI.getMainUI());
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                this.errorDialogBox();
             }
         });
 
@@ -137,6 +138,19 @@ public class AddUserUI {
         }
 
         return caloryRate;
+    }
+
+    //Method shows dialog in case of incorrect input
+    private void errorDialogBox() {
+
+        Dialog<String> dialog = new Dialog<String>();
+        dialog.setTitle("Incorrect input");
+        ButtonType okButton = new ButtonType("OK");
+        dialog.setContentText("Input is incorrect. Make sure height, weight, waist circumference " +
+                "is in numeric format and all the gaps are filled");
+        dialog.getDialogPane().getButtonTypes().add(okButton);
+
+        dialog.showAndWait();
     }
 
 }

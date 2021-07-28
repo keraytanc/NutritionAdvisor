@@ -2,6 +2,8 @@ package keray.ui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -50,7 +52,11 @@ public class MainUI {
 
         //attaching window-switch action to each button
         userButton.setOnAction((event) -> layout.setCenter(userMenuBox));
-        foodButton.setOnAction((event) -> layout.setCenter(foodMenuBox));
+        foodButton.setOnAction((event) -> {
+
+            layout.setCenter(foodMenuBox);
+            foodMenu.updateProgress(foodMenu.progressMenu);
+        });
 
         layout.setCenter(userMenuBox);
 
@@ -61,6 +67,18 @@ public class MainUI {
     //method will provide the User to other layers of layout
     public static Person getUser() {
         return user;
+    }
+
+    //Method shows dialog in case of incorrect input
+    public static void errorDialogBox() {
+
+        Dialog<String> dialog = new Dialog<String>();
+        dialog.setTitle("Incorrect input");
+        ButtonType okButton = new ButtonType("OK");
+        dialog.setContentText("Input is incorrect. Make sure the input is numerical");
+        dialog.getDialogPane().getButtonTypes().add(okButton);
+
+        dialog.showAndWait();
     }
 }
 
