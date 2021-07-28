@@ -99,7 +99,7 @@ public class AddUserUI {
                 DbUsers.addUserToDb(newPerson);
 
                 MainUI mainUI = new MainUI(newPerson);
-                MotherUI.setInsideMotherLayout(mainUI.getMainUI());
+                ParentUI.setInsideParentLayout(mainUI.getMainUI());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,8 +1,7 @@
 package keray.ui;
 
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import keray.domain.EatenFoodData;
+import keray.logic.DbUsers;
 import keray.logic.SearchTable;
 
 import javafx.geometry.Insets;
@@ -167,10 +166,10 @@ public class AddingFoodUI {
         Label carbProgressLabel = new Label("Carbs consumed: ");
 
         //progress bars
-        ProgressBar kcalBar = new ProgressBar(MainUI.getUser().getKcalEatenToday() / MainUI.getUser().getKcalDemand());
-        ProgressBar protBar = new ProgressBar(MainUI.getUser().getProtEatenToday() / MainUI.getUser().getMinProtein());
-        ProgressBar fatBar = new ProgressBar(MainUI.getUser().getFatEatenToday() / MainUI.getUser().getMinFats());
-        ProgressBar carbBar = new ProgressBar(MainUI.getUser().getCarbEatenToday() / MainUI.getUser().getMinCarbs());
+        ProgressBar kcalBar = new ProgressBar(1.0 * MainUI.getUser().getKcalEatenToday() / MainUI.getUser().getKcalDemand());
+        ProgressBar protBar = new ProgressBar(1.0 * MainUI.getUser().getProtEatenToday() / MainUI.getUser().getMinProtein());
+        ProgressBar fatBar = new ProgressBar(1.0 * MainUI.getUser().getFatEatenToday() / MainUI.getUser().getMinFats());
+        ProgressBar carbBar = new ProgressBar(1.0 * MainUI.getUser().getCarbEatenToday() / MainUI.getUser().getMinCarbs());
 
         //Labels with numerical progress
         Label kcalEatenLabel = new Label(MainUI.getUser().getKcalEatenToday() + "/" + MainUI.getUser().getKcalDemand());
@@ -232,6 +231,7 @@ public class AddingFoodUI {
                 fatLabel.setText("Fats: " + Math.round(fats));
                 carbLabel.setText("Carbs: " + Math.round(carbs));
             } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
         });
 
@@ -239,17 +239,16 @@ public class AddingFoodUI {
         addButton.setOnAction((event) -> {
 
             int eatenFoodsId = tableMechanism.getChosenFood().getId();
-            int eatenFoodsWeight = 0;
 
             if (!enterFoodWeight.getText().isEmpty()) {
-                eatenFoodsWeight = Integer.parseInt(enterFoodWeight.getText());
+                int eatenFoodsWeight = Integer.parseInt(enterFoodWeight.getText());
 
                 //adding food to the list
-                EatenFoodData eatenFood = new EatenFoodData(eatenFoodsId, eatenFoodsWeight);
                 MainUI.getUser().addEatenFood(eatenFoodsId, eatenFoodsWeight);
+                DbUsers.updateEatenFoodsInDb(MainUI.getUser(), MainUI.getUser().listAsAString());
                 eatenFoodTableObject.updateEatenFoodTable();
                 this.updateProgress(progressMenu);
-                System.out.println(MainUI.getUser().listAsAString());
+
             }
 
         });
@@ -258,6 +257,7 @@ public class AddingFoodUI {
         deleteFromEatenButton.setOnAction((event) -> {
             if (eatenFoodTableObject.getFoodToDelete() != null) {
                 MainUI.getUser().deleteFoodFromList(eatenFoodTableObject.getFoodToDelete());
+                DbUsers.updateEatenFoodsInDb(MainUI.getUser(), MainUI.getUser().listAsAString());
                 eatenFoodTableObject.updateEatenFoodTable();
                 eatenFoodTableObject.setFoodToDeleteAsNull();
                 this.updateProgress(progressMenu);

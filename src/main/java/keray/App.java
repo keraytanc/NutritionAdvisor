@@ -3,11 +3,7 @@ package keray;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.converter.LocalDateStringConverter;
-import keray.ui.MotherUI;
-
-import java.time.LocalDate;
-import java.util.Date;
+import keray.ui.ParentUI;
 
 /**
  * JavaFX App
@@ -17,8 +13,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
 
-        MotherUI motherUI = new MotherUI();
-        Scene mainScene = motherUI.getScene();
+        ParentUI parentUI = new ParentUI();
+        Scene mainScene = parentUI.getScene();
         stage.setScene(mainScene);
 
         stage.show();

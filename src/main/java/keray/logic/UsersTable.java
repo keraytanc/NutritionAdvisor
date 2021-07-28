@@ -1,6 +1,5 @@
 package keray.logic;
 
-import javafx.collections.MapChangeListener;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -10,7 +9,7 @@ import javafx.scene.text.Text;
 import keray.domain.FoodSearchResult;
 import keray.domain.Person;
 import keray.ui.MainUI;
-import keray.ui.MotherUI;
+import keray.ui.ParentUI;
 
 public class UsersTable {
 
@@ -27,7 +26,7 @@ public class UsersTable {
 
 
         //sizing columns
-        nameColumn.prefWidthProperty().bind(MotherUI.getMotherLayout().widthProperty().add(-65));
+        nameColumn.prefWidthProperty().bind(ParentUI.getParentLayout().widthProperty().add(-65));
 
         //adding ability to pick a user by double click
         table.setRowFactory((rowFunction) -> {
@@ -38,7 +37,7 @@ public class UsersTable {
                     //opening the main User tab with chosen person
                     Person chosenPerson = (Person) table.getSelectionModel().getSelectedItem();
                     MainUI mainUI = new MainUI(chosenPerson);
-                    MotherUI.setInsideMotherLayout(mainUI.getMainUI());
+                    ParentUI.setInsideParentLayout(mainUI.getMainUI());
 
                 }
             });

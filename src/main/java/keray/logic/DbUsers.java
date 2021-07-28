@@ -33,13 +33,8 @@ public class DbUsers {
                 int waist = result.getInt("userwaist");
                 int multiplier = result.getInt("usermultiplier");
                 double caloryRate = result.getDouble("usercaloryrate");
-                String lastDateFromDb = result.getString("lastdate");
 
-
-
-
-                Person newPerson = new Person(name,height, weight, waist, multiplier, caloryRate);
-                newPerson.setId(id);
+                Person newPerson = new Person(id, name,height, weight, waist, multiplier, caloryRate);
 
                 usersArrayList.add(newPerson);
             }
@@ -47,9 +42,7 @@ public class DbUsers {
             e.printStackTrace();
         }
 
-        ObservableList<Person> resultList = FXCollections.observableArrayList(usersArrayList);
-
-        return resultList;
+        return FXCollections.observableArrayList(usersArrayList);
     }
     //method will add user to database
     public static void addUserToDb(Person person) {
@@ -97,26 +90,23 @@ public class DbUsers {
         updatePerson(person, "userwaist", waist);
     }
 
-    //updating table functionality
-    private static void updatePerson(Person person, String column, Object value) {
-        int userId = person.getId();
-
-        String valueString = String.valueOf(value);
-
-        String dbUpdateQuery = "UPDATE users SET " + column + " = " + valueString + " WHERE idusers = " + userId + ";";
-        DbConnector.updateValueInDb(dbUpdateQuery);
+    //update list of eatenFoods
+    public static void updateEatenFoodsInDb(Person person, String eatenFoods) {
+        updatePerson(person, "eatenfood", eatenFoods);
     }
 
+
+
     //method will retrieve an ArrayList of foods eaten today from the database
-    public static ArrayList<EatenFoodData> retrieveEatenFoodsFromDb(Person person) {
+    public static ArrayList<EatenFoodData> retrieveEatenFoodsFromDb(int personsId) {
+
+        //Eaten foods String retrieved from Database
+        String foodListAsString = returnEatenFoodsAsString(personsId);
 
         //new ArrayList
         ArrayList<EatenFoodData> eatenFood = new ArrayList<>();
 
-        //String retrieved from Database
-        String foodListAsString = returnEatenFoodsAsString(person);
-
-        //if the String is empty, an empty Arraylist is returned. Otherwise list of foods is returned
+        //if the String is empty, an empty Arraylist is returned. Otherwise list of EatenFoodData objects is returned
         if (foodListAsString.isEmpty()) {
             return eatenFood;
         } else {
@@ -127,24 +117,41 @@ public class DbUsers {
             //turning each String object into EatenFoodData object(each object consist of id and its weight separated by comma)
             eatenFoods.stream()
                     .map(string -> string.split(","))
-                    .map(array -> new EatenFoodData(Integer.valueOf(array[0]), Integer.valueOf(array[1])))
-                    .forEach(object -> eatenFood.add(object));
+                    .map(array -> new EatenFoodData(Integer.parseInt(array[0]), Integer.parseInt(array[1])))
+                    .forEach(eatenFood::add);
 
             //returning the updated list of eaten foods
             return eatenFood;
         }
-
     }
 
-    //method will check if food list in the database is up to date and reset it if not and return list of foods eaten today
-    private static String returnEatenFoodsAsString(Person person) {
 
-        //getting users ID
-        int id = person.getId();
 
-        //getting the date of the last update from User's database
+
+
+    //updating table functionality
+    private static void updatePerson(Person person, String column, Object value) {
+        int userId = person.getId();
+
+        String valueString = String.valueOf(value);
+
+        String dbUpdateQuery = "UPDATE users SET " + column + " = \"" + valueString + "\" WHERE idusers = " + userId + ";";
+        DbConnector.updateValueInDb(dbUpdateQuery);
+    }
+
+    //method will check if food list in the database is up to date(reset it if not) and return list of foods eaten today
+    private static String returnEatenFoodsAsString(int personsId) {
+
+        String lastDate = getLastDateFromDb(personsId);
+        String todaysDate = getTodaysDate();
+
+        return getCurrentFoodList(personsId, lastDate, todaysDate);
+    }
+
+    //getting the date of the last update from User's database as String
+    private static String getLastDateFromDb(int personsId) {
         String lastDate = "";
-        String lastDateQuery = "SELECT lastdate FROM users WHERE idusers = " + id + ";";
+        String lastDateQuery = "SELECT lastdate FROM users WHERE idusers = " + personsId + ";";
         ResultSet resultDate = DbConnector.selectQuery(lastDateQuery);
         try {
             resultDate.next();
@@ -152,17 +159,27 @@ public class DbUsers {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        if (lastDate==null) {
+            lastDate = "";
+        }
+        return lastDate;
+    }
 
-        //getting todays date
+    //getting todays date as string
+    private static String getTodaysDate() {
+
         LocalDateStringConverter dateToStringCoverter = new LocalDateStringConverter();
-        String todaysDate = dateToStringCoverter.toString(LocalDate.now());
+        return dateToStringCoverter.toString(LocalDate.now());
+    }
 
+    //method check if the last update is still valid and return foods list accordingly
+    private static String getCurrentFoodList(int personsId, String lastDate, String todaysDate) {
         //comparing todays date with the last date in database
         if (lastDate.equals(todaysDate)) {
 
             //if true method returns current food list
             String foodList = "";
-            String dbQuery = "SELECT eatenfood FROM users WHERE idusers = " + id + ";";
+            String dbQuery = "SELECT eatenfood FROM users WHERE idusers = " + personsId + ";";
             ResultSet resultFoodList = DbConnector.selectQuery(dbQuery);
             try {
                 resultFoodList.next();
@@ -172,12 +189,10 @@ public class DbUsers {
             }
             return foodList;
         } else {
-
             //if false method erases current foodlist, changes last date and returns empty String
-            String dbUpdateQuery = "UPDATE users SET lastdate = '" + todaysDate + "', eatenfood = '' WHERE idusers = " + id + ";";
+            String dbUpdateQuery = "UPDATE users SET lastdate = '" + todaysDate + "', eatenfood = '' WHERE idusers = " + personsId + ";";
             DbConnector.updateValueInDb(dbUpdateQuery);
             return "";
-
         }
     }
 }

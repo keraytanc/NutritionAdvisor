@@ -31,15 +31,13 @@ public class MainUI {
         //creating buttons for top menu
         Button userButton = new Button("User");
         Button foodButton = new Button("Food");
-        Button statsButton = new Button("Stats");
 
         //buttons size
-        userButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.3));
-        foodButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.3));
-        statsButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.3));
+        userButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.5));
+        foodButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.5));
 
         //adding buttons to top menu
-        topMenu.getChildren().addAll(userButton, foodButton, statsButton);
+        topMenu.getChildren().addAll(userButton, foodButton);
 
         //adding top menu to the layout
         layout.setTop(topMenu);
@@ -49,13 +47,10 @@ public class MainUI {
         VBox foodMenuBox = foodMenu.getAddingFoodUI();
         UserUI userMenu = new UserUI();
         VBox userMenuBox = userMenu.getUserUI();
-        StatsUI statsMenu = new StatsUI();
-        VBox statsMenuBox = statsMenu.getStatsUI();
 
         //attaching window-switch action to each button
         userButton.setOnAction((event) -> layout.setCenter(userMenuBox));
         foodButton.setOnAction((event) -> layout.setCenter(foodMenuBox));
-        statsButton.setOnAction((event) -> layout.setCenter(statsMenuBox));
 
         layout.setCenter(userMenuBox);
 
