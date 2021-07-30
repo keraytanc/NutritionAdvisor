@@ -3,14 +3,14 @@ package keray.logic;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import keray.domain.Food;
 import keray.domain.FoodSearchResult;
+import keray.ui.MainUI;
+import keray.ui.ParentUI;
 
 //class will be responsible for food searching mechanism
 public class SearchTable {
@@ -33,13 +33,18 @@ public class SearchTable {
         TableColumn nameColumn = new TableColumn("Food");
         TableColumn categoryColumn = new TableColumn("Category");
 
+
         //defining data type for each column
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("foodCategory"));
 
         //sizing columns
-        nameColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.6).add(-7.5));
-        categoryColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.4).add(-8));
+        nameColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.6));
+        categoryColumn.minWidthProperty().bind(this.table.widthProperty().multiply(0.35));
+        categoryColumn.maxWidthProperty().bind(this.table.widthProperty().multiply(0.4));
+
+
+        this.table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         //adding ability to pick a food(chosenFood variable) by double click
         this.table.setRowFactory((rowFunction) -> {

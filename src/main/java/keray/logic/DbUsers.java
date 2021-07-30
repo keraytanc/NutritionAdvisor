@@ -65,6 +65,14 @@ public class DbUsers {
         person.setId(personsId);
     }
 
+    //method will delete user from DB
+    public static void deleteUserFromDb(Person person) {
+        int id = person.getId();
+
+        String query = "DELETE FROM users WHERE idusers = " + id + ";";
+        DbConnector.updateValueInDb(query);
+    }
+
 
     //method updates the calory rate(rate according to the plans)
     public static void updateCaloryRate(Person person) {
@@ -96,7 +104,6 @@ public class DbUsers {
     }
 
 
-
     //method will retrieve an ArrayList of foods eaten today from the database
     public static ArrayList<EatenFoodData> retrieveEatenFoodsFromDb(int personsId) {
 
@@ -124,9 +131,6 @@ public class DbUsers {
             return eatenFood;
         }
     }
-
-
-
 
 
     //updating table functionality

@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import keray.domain.Person;
 import keray.logic.DbUsers;
 
@@ -33,7 +34,7 @@ public class UserUI {
         layout.setPadding(new Insets(10, 0, 0, 0));
         layout.setPrefSize(360, 610);
         layout.setMinSize(200, 420);
-        layout.spacingProperty().bind(layout.heightProperty().add(-400).multiply(0.15));
+        layout.spacingProperty().bind(layout.heightProperty().add(-400).multiply(0.20));
         layout.setAlignment(Pos.TOP_CENTER);
 
         //creating top Labels
@@ -71,26 +72,6 @@ public class UserUI {
 
         layout.getChildren().add(updateMenu);
 
-         //creating buttons to adjust basic maintenance calories demand
-        HBox adjustKcalMenu = new HBox();
-        adjustKcalMenu.setSpacing(2);
-
-        Button lowerDemandButton = new Button("lower kcal demand");
-        Button resetDemandButton = new Button("Reset kcal demand");
-        Button raiseDemandButton = new Button("raise kcal demand");
-
-        lowerDemandButton.setWrapText(true);
-        resetDemandButton.setWrapText(true);
-        raiseDemandButton.setWrapText(true);
-
-        lowerDemandButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.33));
-        resetDemandButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.33));
-        raiseDemandButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.33));
-
-        adjustKcalMenu.getChildren().addAll(lowerDemandButton, resetDemandButton, raiseDemandButton);
-        layout.getChildren().add(adjustKcalMenu);
-
-
         //creating the label depicting current body fat and nutritional advice
         VBox adviceMenu = new VBox();
         adviceMenu.setAlignment(Pos.CENTER);
@@ -108,8 +89,6 @@ public class UserUI {
         adviceField.setPrefHeight(60);
         adviceField.prefWidthProperty().bind(layout.widthProperty());
         this.updateAdviceField(adviceField);
-
-
 
         adviceMenu.getChildren().addAll(this.bodyFatLabel, adviceField);
         layout.getChildren().add(adviceMenu);
@@ -176,6 +155,45 @@ public class UserUI {
         kcalDemandMenu.getChildren().addAll(dietaryRequirements, this.kcalLabel, horizontalSeparator, macroDemandMenu);
 
         layout.getChildren().add(kcalDemandMenu);
+
+        //creating buttons to adjust basic maintenance calories demand
+        VBox adjustKcalMenu = new VBox();
+
+        Label manualLabel = new Label("Manual adjustment:");
+        layout.getChildren().add(manualLabel);
+
+        HBox adjustKcalButtons = new HBox();
+        adjustKcalButtons.setSpacing(2);
+
+        Button lowerDemandButton = new Button("lower kcal demand");
+        Button resetDemandButton = new Button("Reset kcal demand");
+        Button raiseDemandButton = new Button("raise kcal demand");
+
+        lowerDemandButton.setWrapText(true);
+        resetDemandButton.setWrapText(true);
+        raiseDemandButton.setWrapText(true);
+
+        lowerDemandButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.33));
+        resetDemandButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.33));
+        raiseDemandButton.prefWidthProperty().bind(layout.widthProperty().multiply(0.33));
+
+        adjustKcalButtons.getChildren().addAll(lowerDemandButton, resetDemandButton, raiseDemandButton);
+
+        adjustKcalMenu.getChildren().addAll(manualLabel, adjustKcalButtons);
+        layout.getChildren().add(adjustKcalMenu);
+
+        //creating tooltip with the instruction for the adjustment button
+        Tooltip adjustmentTip = new Tooltip();
+        adjustmentTip.setShowDelay(Duration.seconds(0));
+        adjustmentTip.setHideDelay(Duration.seconds(.3));
+        adjustmentTip.setText("Follow your weight for two weeks. If your \nweight doesn't follow your plans" +
+                " it means \nthat your base level nutritional needs \nare inaccurate. Adjust your needs with \nthe buttons." +
+                " lower it if you need less food \nthan Advisor stipulate, raise it if you need\n" +
+                " more and reset it to the standard value \nif you are not sure what should you do.");
+
+        lowerDemandButton.setTooltip(adjustmentTip);
+        resetDemandButton.setTooltip(adjustmentTip);
+        raiseDemandButton.setTooltip(adjustmentTip);
 
         //adding to the menu option of changing the plans
         choosePlansList.getSelectionModel().selectedItemProperty().addListener((change, oldValue, newValue) -> {
@@ -281,12 +299,11 @@ public class UserUI {
             advice = "Your fat level is too low and might be unhealthy if kept for extended periods of time. " +
                     "Gain weight.";
         } else if (bodyFat < 20) {
-            advice = "You are a fit person. Fat level between 20% and 26% is optimal for health " +
-             "and aestherics. Your aim should be to maintain current fat level.";
+            advice = "You are a fit person. Fat level between 16.5% and 20% is optimal for health " +
+             "and aesthetics. Your aim should be to maintain current fat level.";
         } else if (bodyFat < 26) {
-            advice = "You are overweight. You should loose weight. Start your diet";
+            advice = "You are overweight. You should loose weight. Start your diet.";
         }
-
         return advice;
     }
 }

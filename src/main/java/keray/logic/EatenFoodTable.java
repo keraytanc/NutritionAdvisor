@@ -32,8 +32,12 @@ public class EatenFoodTable {
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
         //sizing columns
-        foodColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.8));
-        weightColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.2));
+        foodColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.7));
+        weightColumn.minWidthProperty().bind(this.table.widthProperty().multiply(0.25));
+        weightColumn.maxWidthProperty().bind(this.table.widthProperty().multiply(0.3));
+
+
+        this.table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         //adding ability to pick food to delete
         this.table.setRowFactory((rowFunction) -> {

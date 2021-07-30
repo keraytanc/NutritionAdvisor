@@ -3,18 +3,15 @@ package keray.ui;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 
+//the class creates the Parent UI that will shuffle between user interfaces
 public class ParentUI {
-
-    //mother UI which will contain all other
-    private static BorderPane parentLayout = new BorderPane();
+    //parent UI which will contain all other
+    private static BorderPane parentLayout;
 
     public ParentUI() {
-
         parentLayout = new BorderPane();
-        //size for layouts
         parentLayout.setPrefSize(360, 640);
         parentLayout.setPadding(new Insets(15, 25, 20, 25));
     }
@@ -25,12 +22,10 @@ public class ParentUI {
 
     //method will return a Scene that will host the program to the the main class
     public Scene getScene() {
-        PickUserUI welcome = new PickUserUI();
-        BorderPane mainDisplay = welcome.getPickUserUI();
+        PickUserUI pickUserUI = new PickUserUI();
+        BorderPane mainDisplay = pickUserUI.getPickUserUI();
         parentLayout.setCenter(mainDisplay);
-        Scene view = new Scene(parentLayout);
-
-        return view;
+        return new Scene(parentLayout);
     }
 
     //method used to shuffle between different interfaces

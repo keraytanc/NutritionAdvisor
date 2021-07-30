@@ -52,14 +52,14 @@ public class AddingFoodUI {
         SearchTable tableMechanism = new SearchTable();
         TableView searchResultList = tableMechanism.createNewTable();
         searchResultList.prefWidthProperty().bind(layout.widthProperty());
-        searchResultList.prefHeightProperty().bind(layout.heightProperty().multiply(0.30));
+        searchResultList.prefHeightProperty().bind(layout.heightProperty().multiply(0.27));
 
         //creating add Menu
         HBox addMenu = new HBox();
         addMenu.prefWidthProperty().bind(layout.widthProperty());
         addMenu.setSpacing(5);
 
-        addMenu.setPadding(new Insets(5, 0, 5, 0));
+        addMenu.setPadding(new Insets(10, 0, 5, 0));
 
         //ADD MENU: creating elements
         ScrollPane chosenFoodView = new ScrollPane();
@@ -126,9 +126,14 @@ public class AddingFoodUI {
         //FOOD DATA MENU: adding all the elements
         statsMenu.getChildren().addAll(kcalLabel, horizontalSeparator, bottomStatsMenu);
 
+        //Label depicting eaten food table
+        Label eatenFoodLabel = new Label("Foods eaten today:");
+        eatenFoodLabel.setPadding(new Insets(10, 0, 0, 0));
+
         //Menu managing food eaten today
         HBox eatenFoodsMenu = new HBox();
         eatenFoodsMenu.setSpacing(10);
+        eatenFoodsMenu.setPadding(new Insets(0, 0, 10, 0));
 
         //Table of foods eaten today
         EatenFoodTable eatenFoodTableObject = new EatenFoodTable();
@@ -188,7 +193,7 @@ public class AddingFoodUI {
 
         //adding everything to the layout
         this.layout.getChildren().addAll(enterTheFoodLabel, searchMenu, searchResultList, addMenu, statsMenu,
-                eatenFoodsMenu, progressMenu);
+                eatenFoodLabel, eatenFoodsMenu, progressMenu);
 
 
         //adding action to a search food button

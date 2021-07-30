@@ -8,6 +8,7 @@ import keray.ui.ParentUI;
 /**
  * JavaFX App
  */
+//Main class of the application
 public class App extends Application {
 
     @Override
