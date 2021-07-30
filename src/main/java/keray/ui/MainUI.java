@@ -12,45 +12,40 @@ import keray.domain.Person;
 //class is a representing a main UI: buttons at the top and mechanism to switch between windows
 public class MainUI {
     private static Person user;
+    public BorderPane layout;
 
+    //user object is the user selected in previous UI. All the actions and edition will be attributed to selected user
     public MainUI(Person person) {
         user = person;
+        this.layout = new BorderPane();
+        layout.setPrefSize(360, 640);
     }
 
     public BorderPane getMainUI() {
 
-        //creating main layout and top menu
-        BorderPane layout = new BorderPane();
+        //creating and formatting top menu
         HBox topMenu = new HBox();
-
-        //size for layouts
-        layout.setPrefSize(360, 640);
-
-        topMenu.setPrefSize(360, 30);
-        topMenu.spacingProperty().bind(topMenu.widthProperty().multiply(0.05));
-        topMenu.setAlignment(Pos.CENTER);
+        this.formatTopMenu(topMenu);
 
         //creating buttons for top menu
         Button userButton = new Button("User");
         Button foodButton = new Button("Food");
+        this.formatAndAddButtonsToTheMenu(topMenu, userButton, foodButton);
 
-        //buttons size
-        userButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.5));
-        foodButton.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.5));
-
-        //adding buttons to top menu
-        topMenu.getChildren().addAll(userButton, foodButton);
-
-        //adding top menu to the layout
-        layout.setTop(topMenu);
-
-        //creating different UI object
+        //creating other User UI's
         AddingFoodUI foodMenu = new AddingFoodUI();
         VBox foodMenuBox = foodMenu.getAddingFoodUI();
         UserUI userMenu = new UserUI();
         VBox userMenuBox = userMenu.getUserUI();
 
-        //attaching window-switch action to each button
+        //adding elements to the layout
+        layout.setTop(topMenu);
+        layout.setCenter(userMenuBox);
+
+
+        //////////////////ANIMATING UI/////////////////////
+
+        //attaching layout-switch action to each button
         userButton.setOnAction((event) -> layout.setCenter(userMenuBox));
         foodButton.setOnAction((event) -> {
 
@@ -58,10 +53,24 @@ public class MainUI {
             foodMenu.updateProgress(foodMenu.progressMenu);
         });
 
-        layout.setCenter(userMenuBox);
-
-        //Creating new Scene and returning it
         return layout;
+    }
+
+    //////////////////////METHODS//////////////////////////////
+
+    private void formatAndAddButtonsToTheMenu(HBox topMenu, Button button1, Button button2) {
+        //format
+        button1.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.5));
+        button2.prefWidthProperty().bind(topMenu.widthProperty().multiply(0.5));
+
+        //add
+        topMenu.getChildren().addAll(button1, button2);
+    }
+
+    private void formatTopMenu(HBox topMenu) {
+        topMenu.setPrefSize(360, 30);
+        topMenu.spacingProperty().bind(topMenu.widthProperty().multiply(0.05));
+        topMenu.setAlignment(Pos.CENTER);
     }
 
     //method will provide the User to other layers of layout
@@ -72,7 +81,7 @@ public class MainUI {
     //Method shows dialog in case of incorrect input
     public static void errorDialogBox() {
 
-        Dialog<String> dialog = new Dialog<String>();
+        Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Incorrect input");
         ButtonType okButton = new ButtonType("OK");
         dialog.setContentText("Input is incorrect. Make sure the input is numerical");

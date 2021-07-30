@@ -7,6 +7,7 @@ import keray.domain.Person;
 import keray.ui.MainUI;
 import keray.ui.ParentUI;
 
+//Class creates the table in the initial screen where user can edit(choose, add or delete) user profiles
 public class UsersTable {
     public Person toDelete = null;
 
@@ -14,12 +15,12 @@ public class UsersTable {
     public TableView<Person> createNewTable() {
 
         //Create table
-        TableView<Person> table = new TableView<Person>();
+        TableView<Person> table = new TableView<>();
         this.allowTableToEditUsers(table);
 
-        //creating a table that will display search results and its columns
-        TableColumn<Person, String> nameColumn = new TableColumn<Person, String>("Choose User");
-        this.adjustColumn(nameColumn);
+        //creating a column and formatting it
+        TableColumn<Person, String> nameColumn = new TableColumn<>("Choose User");
+        this.formatColumn(nameColumn);
 
         //adding column to the the table
         table.getColumns().add(nameColumn);
@@ -38,7 +39,7 @@ public class UsersTable {
     }
 
     //method edit column according to the needs of the application
-    private void adjustColumn(TableColumn<Person, String> column) {
+    private void formatColumn(TableColumn<Person, String> column) {
         //sizing columns
         column.prefWidthProperty().bind(ParentUI.getParentLayout().widthProperty().add(-65));
 
@@ -56,19 +57,22 @@ public class UsersTable {
         });
     }
 
+    //methods add to the table functionality of choosing or deleting an user
     private void allowTableToEditUsers(TableView<Person> table) {
         //adding ability to pick a user by double click or to pick user to delete
         table.setRowFactory((rowFunction) -> {
             TableRow<Person> row = new TableRow<>();
             row.setOnMouseClicked((click) -> {
+
+                //choosing user
                 if (click.getClickCount() == 2 && !row.isEmpty()) {
                     //opening the main User tab with chosen person
                     Person chosenPerson = table.getSelectionModel().getSelectedItem();
                     MainUI mainUI = new MainUI(chosenPerson);
                     ParentUI.setInsideParentLayout(mainUI.getMainUI());
 
+                //selecting user to delete
                 } else if (!(click.getClickCount() > 1) && !row.isEmpty()) {
-
                     //picking user to delete
                     this.toDelete = table.getSelectionModel().getSelectedItem();
                 }
