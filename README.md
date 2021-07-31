@@ -1,6 +1,6 @@
 # NutritionAdvisor
 
-<!-- TABLE OF CONTENTS -->
+
   <details open="open">
     <summary><h3 style="display: inline-block">Table of Contents</h3></summary>
     <summary>Table of Contents</summary>
