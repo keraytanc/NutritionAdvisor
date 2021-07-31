@@ -34,7 +34,8 @@ As a self-taught java developer, I felt quite confident with the Java basics I l
 
 After long deliberation, I decided that it will be a dietary program. I already had knowledge of the topic, I knew such a program could be useful to myself and that it would help me to face new challenges, making me a better Java developer. 
 
-### About the project
+<!-- ABOUT THE PROJECT -->
+## About the project
 
 The idea for the program stemmed from the particular dietary approach that is simple to follow, precise in its methods and effective in its results. Most of the diets are bombarding us with an endless amount of details and nuances. Following them require us to submit our lives, thoughts and time solely to cooking and food consumption. While such a strict approach could sometimes bring quick results, it’s very ineffective in a long term. Cooking fancy low-calory meals every day and abstaining from eating in social situations is doable in the period of 2-3 months, sometimes it is even fun but can we live our lives like that forever? Most of us don’t. We prefer spending time with family, friends, our hobbies or simply Netflix instead of cooking another low-carb cheesecake for 2 hours.
 
@@ -46,7 +47,8 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
  
  You may ask: „How am I going to track all those foods that I eat? I have no idea how many calories or proteins they have”. Don’t worry; Nutrition Advisor does that as well. Just make sure you enter right away any food you eat into the program It will calculate and track everything for you. You will know how much you have eaten and how much more you can eat.
 
-### How to use? 
+<!-- HOW TO USE? -->
+## How to use? 
 
   <h4 align="center">User choice screen</h4>
   <p align="center">
@@ -76,7 +78,8 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 
 **The food screen** is the screen responsible for tracking user’s everyday food consumption. In the upper part of the screen, the user can search for the particular product. After choosing the product from the result list with a double-click user enters the weight of the consumed product. The table below shows the total nutritious value of the chosen food. After that user can confirm it with the „Add button” and add meal to the daily food list which is placed in the bottom part of the interface. Food will appear in the list of "foods eaten today"(the list resets itself every day). The user can delete the food from the list as well. At the bottom of the screen, progress bars show how much nutritional needs of the user have been met on a given day. It’s important to keep in mind that the required calories intake is a rigid number hence the user should aim to accurately reach(and not exceed) the number every day but other macronutrients are just a minimum required value. There is no problem in exceeding the numbers as long as total calories intake isn’t affected
 
-### Technical information
+<!-- TECHNICAL INFORMATION -->
+## Technical information
 
  The program is written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user information are stored in the local MySQL database.
 
