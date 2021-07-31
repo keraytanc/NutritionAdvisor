@@ -12,15 +12,15 @@
       <a href="#about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#how-to-use?">How to use?</a>
+      <a href="#how-to-use">How to use?</a>
       <ul>
         <li><a href="#user-choice-screen">User choice screen</a></li>
-        <li><a href="#installation">Add user screen</a></li>
+        <li><a href="#Add-user-screen">Add user screen</a></li>
         <li><a href="#prerequisites">The user screen</a></li>
         <li><a href="#installation">The food screen</a></li>
       </ul>
     </li>
-    <li><a href="#Technical information">Technical information</a></li>
+    <li><a href="#Technical-information">Technical information</a></li>
   </ol>
 </details>
 
