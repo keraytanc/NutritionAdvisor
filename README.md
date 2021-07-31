@@ -12,7 +12,7 @@
       <a href="#about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#How to use?">How to use?</a>
+      <a href="#How-to-use?">How to use?</a>
       <ul>
         <li><a href="#prerequisites">User choice screen</a></li>
         <li><a href="#installation">Add user screen</a></li>
