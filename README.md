@@ -1,32 +1,32 @@
 # NutritionAdvisor
 
 <!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#foreword">Foreword</a>
-    </li>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
-      <a href="#how-to-use">How to use?</a>
-      <ul>
-        <li><a href="#user-choice-screen">User choice screen</a></li>
-        <li><a href="#Add-user-screen">Add user screen</a></li>
-        <li><a href="#prerequisites">The user screen</a></li>
-        <li><a href="#installation">The food screen</a></li>
-      </ul>
-    </li>
-    <li><a href="#Technical-information">Technical information</a></li>
-  </ol>
-</details>
+  <details open="open">
+    <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+    <summary>Table of Contents</summary>
+    <ol>
+      <li>
+        <a href="#foreword">Foreword</a>
+      </li>
+      <li>
+        <a href="#about-the-project">About The Project</a>
+      </li>
+      <li>
+        <a href="#how-to-use">How to use?</a>
+        <ul>
+          <li><a href="#user-choice-screen">User choice screen</a></li>
+          <li><a href="#Add-user-screen">Add user screen</a></li>
+          <li><a href="#The-user-screen">The user screen</a></li>
+          <li><a href="#The-food-screen">The food screen</a></li>
+        </ul>
+      </li>
+      <li><a href="#Technical-information">Technical information</a></li>
+    </ol>
+  </details>
 
-<p align="center">
-  <img src="https://i.imgur.com/JZl5k3Y.gif" />
-</p>
+  <p align="center">
+    <img src="https://i.imgur.com/JZl5k3Y.gif" />
+  </p>
 
 ### Foreword
 As a self-taught java developer, I felt quite confident with the Java basics I learned with the content provided by the University of Helsinki’s Java course. During the study, I made countless exercises, some simple, other very complex, many of them were done independently of any help. But all of them were exercises designed by someone else. Someone who made sure that the execution of the exercise wouldn’t exceed the content of the course. That’s why I decided to create something that would be fully independent. That would be created solely according to my vision from the first to the last step. I consciously decided to include within it topics I wasn’t capable of doing yet at that point. I wanted the program to not only be another project in my portfolio but a learning experience. I didn’t have at my disposal anything besides Google search engine and my curiosity.
