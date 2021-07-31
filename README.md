@@ -23,7 +23,7 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 
 ### How to use? 
 
-  <u><h4 style="text-align: center;">User choice screen</h4></u>
+  <h4 align="center"><u>User choice screen</u></h4>
 
 
 **User choice screen** is a screen where you can choose your profile. Since the program can be used by many users it allows each of them to create their own profiles. At the bottom of the screen new profile might be created. In the middle of the screen, there is a functionality to delete a profile from the list of previously created profiles. By double-clicking the name, the user opens a previously-created profile.
