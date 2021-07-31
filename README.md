@@ -6,13 +6,13 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Foreword</a>
+      <a href="#Foreword">Foreword</a>
     </li>
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#getting-started">How to use></a>
+      <a href="#How to use?">How to use?</a>
       <ul>
         <li><a href="#prerequisites">User choice screen</a></li>
         <li><a href="#installation">Add user screen</a></li>
