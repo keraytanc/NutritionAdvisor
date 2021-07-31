@@ -28,16 +28,30 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
   <img src="https://i.imgur.com/hsTVcun.png" />
 </p>
 
-
 **User choice screen** is a screen where you can choose your profile. Since the program can be used by many users it allows each of them to create their own profiles. At the bottom of the screen new profile might be created. In the middle of the screen, there is a functionality to delete a profile from the list of previously created profiles. By double-clicking the name, the user opens a previously-created profile.
+
+  <h4 align="center">Add user screen</h4>
+  <p align="center">
+  <img src="https://i.imgur.com/CoxzvjW.png" />
+</p>
 
 **Add user screen** is an interface to add a new user to the profiles database. The user must enter his name, height, current weight and waist circumference, dietary goals and lifestyle. Based on that information program creates new profile with body composition statistics and initial dietary advice
 
+  <h4 align="center">The user screen</h4>
+  <p align="center">
+  <img src="https://i.imgur.com/xW9rjrY.png" />
+</p>
+
 **The user screen** presents the user with basic information about himself. There is also a field for the user to update his weight and waist circumference which he should do at least once a week. Below is dietary advice which evaluates his current body composition and suggests further plans. Later the user can modify his dietary plans which can change over time. Next, the menu shows the upper limit of calories he can consume and the lower limit of macronutrients he should consume. At the bottom of the screen, there are buttons for manual adjustment of the calories and macronutrients to consume. Since the lifestyle might change from active to sedentary for example, the user should adjust requirements accordingly. Each body is also different and if you don’t progress toward your goals after two weeks of tracking perhaps you should manually adjust your intake: lower demand if you fail to lose weight, raise demand if you fail to gain weight or adjust accordingly if you fail to maintain your weight.
+
+  <h4 align="center">The food screen</h4>
+  <p align="center">
+  <img src="https://i.imgur.com/nXgRCeu.png" />
+</p>
 
 **The food screen** is the screen responsible for tracking user’s everyday food consumption. In the upper part of the screen, the user can search for the particular product. After choosing the product from the result list with a double-click user enters the weight of the consumed product. The table below shows the total nutritious value of the chosen food. After that user can confirm it with the „Add button” and add meal to the daily food list which is placed in the bottom part of the interface. Food will appear in the list of "foods eaten today"(the list resets itself every day). The user can delete the food from the list as well. At the bottom of the screen, progress bars show how much nutritional needs of the user have been met on a given day. It’s important to keep in mind that the required calories intake is a rigid number hence the user should aim to accurately reach(and not exceed) the number every day but other macronutrients are just a minimum required value. There is no problem in exceeding the numbers as long as total calories intake isn’t affected
 
-#### Technical information
+### Technical information
 
  The program is written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user information are stored in the local MySQL database.
 
