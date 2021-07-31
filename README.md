@@ -4,7 +4,7 @@
   <img src="https://i.imgur.com/JZl5k3Y.gif" />
 </p>
 
-#### Foreword
+### Foreword
 As a self-taught java developer, I felt quite confident with the Java basics I learned with the content provided by the University of Helsinki’s Java course. During the study, I made countless exercises, some simple, other very complex, many of them were done independently of any help. But all of them were exercises designed by someone else. Someone who made sure that the execution of the exercise wouldn’t exceed the content of the course. That’s why I decided to create something that would be fully independent. That would be created solely according to my vision from the first to the last step. I consciously decided to include within it topics I wasn’t capable of doing yet at that point. I wanted the program to not only be another project in my portfolio but a learning experience. I didn’t have at my disposal anything besides Google search engine and my curiosity.
 
 After long deliberation, I decided that it will be a dietary program. I already had knowledge of the topic, I knew such a program could be useful to myself and that it would help me to face new challenges, making me a better Java developer. 
@@ -21,9 +21,9 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
  
  You may ask: „How am I going to track all those foods that I eat? I have no idea how many calories or proteins they have”. Don’t worry; Nutrition Advisor does that as well. Just make sure you enter right away any food you eat into the program It will calculate and track everything for you. You will know how much you have eaten and how much more you can eat.
 
-#### How to use? 
+### How to use? 
 
-  <h5 style="text-align: center;">User choice screen</h5>
+  <h4 style="text-align: center;">User choice screen</h4>
 
 
 **User choice screen** is a screen where you can choose your profile. Since the program can be used by many users it allows each of them to create their own profiles. At the bottom of the screen new profile might be created. In the middle of the screen, there is a functionality to delete a profile from the list of previously created profiles. By double-clicking the name, the user opens a previously-created profile.
