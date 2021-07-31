@@ -1,5 +1,29 @@
 # NutritionAdvisor
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">Foreword</a>
+    </li>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#getting-started">How to use></a>
+      <ul>
+        <li><a href="#prerequisites">User choice screen</a></li>
+        <li><a href="#installation">Add user screen</a></li>
+        <li><a href="#prerequisites">The user screen</a></li>
+        <li><a href="#installation">The food screen</a></li>
+      </ul>
+    </li>
+    <li><a href="#Technical information">Usage</a></li>
+  </ol>
+</details>
+
 <p align="center">
   <img src="https://i.imgur.com/JZl5k3Y.gif" />
 </p>
