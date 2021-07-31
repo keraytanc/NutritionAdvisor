@@ -2,7 +2,7 @@
 
 <!-- TABLE OF CONTENTS -->
   <details open="open">
-    <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+    <summary><h3 style="display: inline-block">Table of Contents</h3></summary>
     <summary>Table of Contents</summary>
     <ol>
       <li>
