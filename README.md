@@ -27,8 +27,6 @@
     <img src="https://i.imgur.com/JZl5k3Y.gif" />
   </p>
   
-  
-  
 <!-- FOREWORD -->
 ## Foreword
 
