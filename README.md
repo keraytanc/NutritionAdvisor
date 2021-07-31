@@ -30,3 +30,6 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 
  The program is written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user information are stored in the local MySQL database.
 ![MySQL Database](https://i.imgur.com/mLiB70y.png)
+<p align="center">
+  <img src="https://i.imgur.com/mLiB70y.png" />
+</p>
