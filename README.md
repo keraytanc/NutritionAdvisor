@@ -2,8 +2,7 @@
 
 
   <details open="open">
-    <summary><h3 style="display: inline-block">Table of Contents</h3></summary>
-    <summary>Table of Contents</summary>
+    <summary><h3 style="display: inline-block">Table of Contents</h3></summary>    <summary>Table of Contents</summary>
     <ol>
       <li>
         <a href="#foreword">Foreword</a>
