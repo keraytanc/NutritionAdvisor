@@ -9,7 +9,7 @@ As a self-taught java developer, I felt quite confident with the Java basics I l
 
 After long deliberation, I decided that it will be a dietary program. I already had knowledge of the topic, I knew such a program could be useful to myself and that it would help me to face new challenges, making me a better Java developer. 
 
-#### About the project
+### About the project
 
 The idea for the program stemmed from the particular dietary approach that is simple to follow, precise in its methods and effective in its results. Most of the diets are bombarding us with an endless amount of details and nuances. Following them require us to submit our lives, thoughts and time solely to cooking and food consumption. While such a strict approach could sometimes bring quick results, it’s very ineffective in a long term. Cooking fancy low-calory meals every day and abstaining from eating in social situations is doable in the period of 2-3 months, sometimes it is even fun but can we live our lives like that forever? Most of us don’t. We prefer spending time with family, friends, our hobbies or simply Netflix instead of cooking another low-carb cheesecake for 2 hours.
 
@@ -23,7 +23,7 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 
 ### How to use? 
 
-  <h4 style="text-align: center;">User choice screen</h4>
+  <u><h4 style="text-align: center;">User choice screen</h4></u>
 
 
 **User choice screen** is a screen where you can choose your profile. Since the program can be used by many users it allows each of them to create their own profiles. At the bottom of the screen new profile might be created. In the middle of the screen, there is a functionality to delete a profile from the list of previously created profiles. By double-clicking the name, the user opens a previously-created profile.
