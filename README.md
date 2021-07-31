@@ -4,6 +4,10 @@ As a self-taught java developer, I felt quite confident with the Java basics I l
 
 After long deliberation, I decided that it will be a dietary program. I already had knowledge of the topic, I knew such a program could be useful to myself and that it would help me to face new challenges, making me a better Java developer. 
 
+<p align="center">
+  <img src="https://i.imgur.com/JZl5k3Y.gif" />
+</p>
+
 #### About the project
 
 The idea for the program stemmed from the particular dietary approach that is simple to follow, precise in its methods and effective in its results. Most of the diets are bombarding us with an endless amount of details and nuances. Following them require us to submit our lives, thoughts and time solely to cooking and food consumption. While such a strict approach could sometimes bring quick results, it’s very ineffective in a long term. Cooking fancy low-calory meals every day and abstaining from eating in social situations is doable in the period of 2-3 months, sometimes it is even fun but can we live our lives like that forever? Most of us don’t. We prefer spending time with family, friends, our hobbies or simply Netflix instead of cooking another low-carb cheesecake for 2 hours.
