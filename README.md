@@ -23,6 +23,9 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 
 #### How to use? 
 
+  <h3 style="text-align: center;">Best-README-Template1</h3>
+  <h3 align="center">Best-README-Template2</h3>
+
 **The first screen** is a screen where you can choose your profile. Since the program can be used by many users it allows each of them to create their own profiles. At the bottom of the screen new profile might be created. In the middle of the screen, there is a functionality to delete a profile from the list of previously created profiles. By double-clicking the name, the user opens a previously-created profile.
 
 **Add user screen** is an interface to add a new user to the profiles database. The user must enter his name, height, current weight and waist circumference, dietary goals and lifestyle. Based on that information program creates new profile with body composition statistics and initial dietary advice
