@@ -92,5 +92,5 @@ Sources:
 
 <sup>
 1) https://pubmed.ncbi.nlm.nih.gov/18025815/
-2) https://www.nature.com/articles/s41598-018-29362-1
+2) <br>https://www.nature.com/articles/s41598-018-29362-1</br>
 </sup>
