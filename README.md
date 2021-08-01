@@ -41,7 +41,7 @@ The idea for the program stemmed from the particular dietary approach that is si
 
 The secret to an effective diet is to forget about all the irrelevant details that consume a lot of our time and contribute near to nothing to the end result. Scientific research clearly shows that diet is a numbers game<sup>1</sup>: it doesn’t matter if you eat low-carb, high-carb or only during particular hours. In the end, it’s a simple equation: do you burn more calories than you consume? If yes you can lose weight while eating pizza and chocolate. To stay healthy and preserve muscles one must also consume some reasonable minimum amount of all macronutrients: carbohydrates, fats and proteins. All other things are irrelevant.
 
-Another important part of losing, gaining or maintaining your weight is tracking your progress. That should become your weekly habit because you need feedback to control your weight. Tracking your body weight is not sufficient, however. One could lose muscles; his weight would go down but his body composition would significantly worsen. The opposite is also possible. That’s where body fat measurement comes in. But don’t worry: it’s very simple. Research showed that a particular ratio between height and waist circumference is a very precise tool to estimate the body fat<sup>2</sup>. So you just need to make sure that you measure your weight and waist circumference 1-2 times per week and you adjust your diet accordingly.
+Another important part of losing, gaining or maintaining your weight is tracking your progress. That should become your weekly habit because you need feedback to control your weight. Tracking your body weight is not sufficient, however. One could lose muscles; his weight would go down but his body composition would significantly worsen. The opposite is also possible. That’s where body fat measurement comes in. But don’t worry: it’s very simple. Research showed that a particular ratio between height and waist circumference is a very precise tool to estimate the body fat<a href="Sources:"><sup>2</sup></a>. So you just need to make sure that you measure your weight and waist circumference 1-2 times per week and you adjust your diet accordingly.
 
 So here comes the Nutrition Advisor. Update your weight and waist circumference at least once a week and allow the program to do the thinking and calculating for you. Thanks to its functionality it will give you feedback to help you define your goals. It also estimates all your dietary requirements to make following the diet possibly easy for you to follow. Restricting its prescriptions to only a few numbers gives you freedom. You can keep following your diet regardless if it’s free Sunday that you can spend cooking, busy and long day at work where you can eat only fast foods or a social gathering with your friends.
  
@@ -92,5 +92,5 @@ Sources:
 
 <sup>
 1) https://pubmed.ncbi.nlm.nih.gov/18025815/
-2) <br>https://www.nature.com/articles/s41598-018-29362-1</br>
+<br>2) https://www.nature.com/articles/s41598-018-29362-1</br>
 </sup>
