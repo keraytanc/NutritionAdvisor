@@ -1,7 +1,6 @@
 package keray.logic;
 
 import com.google.gson.Gson;
-import keray.domain.Food;
 import keray.domain.FoodSearchResult;
 
 import java.io.BufferedReader;
@@ -30,37 +29,11 @@ public class FoodDataConnection {
         URI searchUri = convertQueryIntoUri(food);
         String result = sendQuery(searchUri);
 
-        //converting json data into Java objects
+        //converting json data into Java objects and returning it
         Gson gson = new Gson();
-        FoodSearchResult searchedFood = gson.fromJson(result, FoodSearchResult.class);
-
-        return searchedFood;
-
-    }
-    //METODA FUNKCJONUJE NIEPOPRAWNIE POPRZEZ SYNTAX JSONA
-/*
-    //the method will get the food according to its ID
-    public static Food getFood(int ID) {
-
-        //creating URI with proper request
-        URI getFoodUri = URI.create("https://api.nal.usda.gov/fdc/v1/food/" + ID + "?api_key=" + myApiKey);
-
-        //result as a string
-        String stringResult = sendQuery(getFoodUri);
-
-        //converting json data into Java objects
-        Gson gson = new Gson();
-        System.out.println("1");
-        System.out.println(stringResult);
-        Food result = gson.fromJson(stringResult, Food.class);
-        System.out.println("2");
-        System.out.println(result.getDescription());
-
-        return result;
-
+        return gson.fromJson(result, FoodSearchResult.class);
     }
 
- */
 
     //method will efficiently send a query and return result as a String
     private String sendQuery(URI uri) {
@@ -75,7 +48,7 @@ public class FoodDataConnection {
                     .GET()
                     .build();
 
-            //sending request and returning the result in the form of String
+        //sending request and returning the result in the form of String
             //creating a Stream of bytes of GZip stream
             InputStream myStream = connection.send(request, HttpResponse.BodyHandlers.ofInputStream()).body();
 
@@ -90,7 +63,7 @@ public class FoodDataConnection {
             StringBuilder builder = new StringBuilder();
 
             //loop progressively appends lines to the StringBuilder
-            String line = "";
+            String line;
             while((line = reader.readLine()) != null) {
                 builder.append(line);
             }
@@ -105,8 +78,8 @@ public class FoodDataConnection {
         } catch (Exception e) {
             return "incorrect query or connection error";
         }
-
     }
+
 
     //the method will convert inputted food query into a part of URI address for a food search
     private URI convertQueryIntoUri(String query) {
@@ -118,7 +91,7 @@ public class FoodDataConnection {
         List<String> targetStatementAsAList = Arrays.asList(foodArray);
 
         //stream converting words on the list into the part of URI address
-        String searchQuery = targetStatementAsAList.stream().map((word) -> word.trim())
+        String searchQuery = targetStatementAsAList.stream().map(String::trim)
                 .reduce("", (previousString, word) -> {
 
                     //two conditions transform all the spaces between words into "%20" signs
@@ -129,11 +102,8 @@ public class FoodDataConnection {
                     }
                 });
 
-        //joining query statement with the rest of the address and converting it into URI
-        URI finalAddress = URI.create("https://api.nal.usda.gov/fdc/v1/foods/search?api_key="
+        //joining query statement with the rest of the address, converting it into URI and returning
+        return URI.create("https://api.nal.usda.gov/fdc/v1/foods/search?api_key="
                 + myApiKey + "&query=" + searchQuery + "&dataType=SR%20Legacy&pageSize=1000");
-
-        //returning ready address
-        return finalAddress;
     }
 }

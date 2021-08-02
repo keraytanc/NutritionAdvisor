@@ -4,20 +4,11 @@ import java.sql.*;
 
 public class DbConnector {
 
-    private static String URL = "jdbc:mysql://localhost:3306/nutrition";
-    private static String user = "root";
-    private static String password = "Qwerty1!";
+    private static final String URL = "jdbc:mysql://localhost:3306/nutrition";
+    private static final String user = "root";
+    private static final String password = "Qwerty1!";
 
-    //method connects with database
-    public static Connection connect() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, user, password);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return connection;
-    }
+
 
     //methods sends SELECT query to database
     public static ResultSet selectQuery(String query) {
@@ -33,9 +24,10 @@ public class DbConnector {
         return result;
     }
 
+
     //method adds new record to the db and returns ID of new record
     public static Integer addingNewRecordToDb(String query) {
-        Integer newId = 0;
+        int newId = 0;
         try {
             Connection connection = connect();
             Statement statement = connection.createStatement();
@@ -50,6 +42,7 @@ public class DbConnector {
         return newId;
     }
 
+
     //method update chosen value in the database
     public static void updateValueInDb(String query) {
 
@@ -62,6 +55,18 @@ public class DbConnector {
             throwables.printStackTrace();
         }
 
+    }
+
+
+    //method connects with database
+    private static Connection connect() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(URL, user, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return connection;
     }
 
 

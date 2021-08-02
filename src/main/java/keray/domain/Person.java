@@ -3,28 +3,27 @@ package keray.domain;
 import keray.logic.DbUsers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-//the class will analyze person according to a dietary needs. Through the variable "multiplier" the maintanance
-//amount of nutritients will be adjusted(standard value is a 32 for most) and through variable "caloryRate"
+
+//the class will analyze person according to a dietary needs. Through the variable "multiplier" the maintenance
+//amount of nutrients will be adjusted(standard value is a 32 for most) and through variable "calorieRate"
 //this nutritional demand will be multiplied according to a plans(loosing or gaining weight)
-
 public class Person {
     private int id;
-    private String name;
-    private int height;
+    private final String name;
+    private final int height;
     private int weight;
     private int waistCircumference;
-    private double caloryRate;
+    private double calorieRate;
     private int multiplier;
     private int kcalDemand;
     private int minProtein;
     private int minCarbs;
     private int minFats;
-    private ArrayList<EatenFoodData> eatenToday;
+    private final ArrayList<EatenFoodData> eatenToday;
 
     //constructor to add a new user
-    public Person(String name, int height, int weight, int waistCircumference, int multiplier, double caloryRate) {
+    public Person(String name, int height, int weight, int waistCircumference, int multiplier, double calorieRate) {
         this.id = 0;
         this.name = name;
 
@@ -37,16 +36,16 @@ public class Person {
         if (height < 40) { height = 40; }
         this.height = height;
         this.multiplier = multiplier;
-        this.caloryRate = caloryRate;
-        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * caloryRate));
+        this.calorieRate = calorieRate;
+        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * calorieRate));
         this.minProtein = Math.toIntExact(Math.round(weight * 1.8));
-        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * caloryRate));
-        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * caloryRate));
-        this.eatenToday = new ArrayList<EatenFoodData>();
+        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * calorieRate));
+        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * calorieRate));
+        this.eatenToday = new ArrayList<>();
     }
 
     //constructor to retrieve user from database
-    public Person(int id, String name, int height, int weight, int waistCircumference, int multiplier, double caloryRate) {
+    public Person(int id, String name, int height, int weight, int waistCircumference, int multiplier, double calorieRate) {
         this.id = id;
         this.name = name;
 
@@ -59,11 +58,11 @@ public class Person {
         if (height < 40) { height = 40; }
         this.height = height;
         this.multiplier = multiplier;
-        this.caloryRate = caloryRate;
-        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * caloryRate));
+        this.calorieRate = calorieRate;
+        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * calorieRate));
         this.minProtein = Math.toIntExact(Math.round(weight * 1.8));
-        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * caloryRate));
-        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * caloryRate));
+        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * calorieRate));
+        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * calorieRate));
         this.eatenToday = DbUsers.retrieveEatenFoodsFromDb(id);
     }
 
@@ -92,7 +91,7 @@ public class Person {
     public int getMinFats() {
         return minFats;
     }
-    public double getCaloryRate() { return caloryRate; }
+    public double getCalorieRate() { return calorieRate; }
     public int getMultiplier() { return multiplier; }
     public int getId() { return id; }
     public ArrayList<EatenFoodData> getEatenToday() { return eatenToday; }
@@ -124,15 +123,10 @@ public class Person {
 
     //adding to a kcal intake
     public void addIntake(int percent) {
-        this.caloryRate = 1 + (1.0 * percent/100);
+        this.calorieRate = 1 + (1.0 * percent/100);
         this.changeIntake();
     }
 
-    //method will be used to set multiplier according to lifestyle(31 for sedentary, 33 for active and 32 for average)
-    public void setMultiplier(int number) {
-        this.multiplier = number;
-        this.changeIntake();
-    }
 
     //standard variable's value needed to calculate calories demand
     public void resetMultiplier() {
@@ -154,10 +148,10 @@ public class Person {
 
     //internal method to adjust intake according to changing conditions
     private void changeIntake() {
-        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * this.caloryRate));
+        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * this.calorieRate));
         this.minProtein = Math.toIntExact(Math.round(weight * 1.8));
-        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * this.caloryRate));
-        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * this.caloryRate));
+        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * this.calorieRate));
+        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * this.calorieRate));
     }
 
     //adding to the list of Foods eaten today
@@ -184,7 +178,7 @@ public class Person {
             if (list.toString().isEmpty()) {
                 list.append(food);
             } else {
-                list.append(" " + food);
+                list.append(" ").append(food);
             }
         }
         return list.toString();
@@ -226,13 +220,4 @@ public class Person {
         }
         return carbEaten;
     }
-
-
-    //toString method to check users for testing
-    @Override
-    public String toString() {
-        return this.name + this.weight + this.waistCircumference + this.height + this.multiplier + " " +
-                this.caloryRate + " " + this.kcalDemand + " " + this.minProtein + " " + this.minFats + " " + this.minCarbs;
-    }
-
 }

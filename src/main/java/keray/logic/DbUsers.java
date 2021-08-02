@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//class will retieve and add users to DB
+//class will retrieve and add users to DB
 public class DbUsers {
 
-    //method returns a list of users
+
+    //method returns a list of users stored in database
     public static ObservableList<Person> getUsersFromDb() {
 
         ArrayList<Person> usersArrayList = new ArrayList<>();
@@ -32,9 +33,9 @@ public class DbUsers {
                 int weight = result.getInt("userweight");
                 int waist = result.getInt("userwaist");
                 int multiplier = result.getInt("usermultiplier");
-                double caloryRate = result.getDouble("usercaloryrate");
+                double calorieRate = result.getDouble("usercaloryrate");
 
-                Person newPerson = new Person(id, name,height, weight, waist, multiplier, caloryRate);
+                Person newPerson = new Person(id, name,height, weight, waist, multiplier, calorieRate);
 
                 usersArrayList.add(newPerson);
             }
@@ -44,6 +45,8 @@ public class DbUsers {
 
         return FXCollections.observableArrayList(usersArrayList);
     }
+
+
     //method will add user to database
     public static void addUserToDb(Person person) {
 
@@ -53,17 +56,18 @@ public class DbUsers {
         double weight = person.getWeight();
         double waist = person.getWaistCircumference();
         int multiplier = person.getMultiplier();
-        double caloryRate = person.getCaloryRate();
+        double calorieRate = person.getCalorieRate();
 
         //using data to create a query
         String dbQuery = "INSERT INTO users(username, userheight, userweight, userwaist, usermultiplier, usercaloryrate) " +
                 "VALUES ('" + name + "', " + height + ", " + weight + ", " + waist + ", " +
-                multiplier + ", " + caloryRate + ")";
+                multiplier + ", " + calorieRate + ")";
 
         //sending a query and effectively adding user to the DB. Setting sql generated ID to the java object
         int personsId = DbConnector.addingNewRecordToDb(dbQuery);
         person.setId(personsId);
     }
+
 
     //method will delete user from DB
     public static void deleteUserFromDb(Person person) {
@@ -74,29 +78,31 @@ public class DbUsers {
     }
 
 
-    //method updates the calory rate(rate according to the plans)
-    public static void updateCaloryRate(Person person) {
+    //method updates user's calorie rate(rate according to the plans)
+    public static void updateCalorieRate(Person person) {
 
-        double caloryRate = person.getCaloryRate();
-        updatePerson(person, "usercaloryrate", caloryRate);
-
+        double calorieRate = person.getCalorieRate();
+        updatePerson(person, "usercaloryrate", calorieRate);
     }
 
-    //method updates the multiplier(basic calory demand)
+
+    //method updates user's multiplier(basic calorie demand)
     public static void updateMultiplier(Person person, int multiplier) {
         updatePerson(person, "usermultiplier", multiplier);
     }
 
-    //update user weight
+
+    //update user's weight
     public static void updateWeight(Person person, int weight) {
         updatePerson(person, "userweight", weight);
-
     }
 
-    //update user waist circumference
+
+    //update user's waist circumference
     public static void updateWaist(Person person, int waist) {
         updatePerson(person, "userwaist", waist);
     }
+
 
     //update list of eatenFoods
     public static void updateEatenFoodsInDb(Person person, String eatenFoods) {
@@ -114,9 +120,7 @@ public class DbUsers {
         ArrayList<EatenFoodData> eatenFood = new ArrayList<>();
 
         //if the String is empty, an empty Arraylist is returned. Otherwise list of EatenFoodData objects is returned
-        if (foodListAsString.isEmpty()) {
-            return eatenFood;
-        } else {
+        if (!foodListAsString.isEmpty()) {
 
             //Getting a list of String convertible to the EatenFoodData object(each object is separated by space)
             List<String> eatenFoods = Arrays.asList(foodListAsString.split(" "));
@@ -128,12 +132,12 @@ public class DbUsers {
                     .forEach(eatenFood::add);
 
             //returning the updated list of eaten foods
-            return eatenFood;
         }
+        return eatenFood;
     }
 
 
-    //updating table functionality
+    //updating user's chosen value in database
     private static void updatePerson(Person person, String column, Object value) {
         int userId = person.getId();
 
@@ -143,6 +147,7 @@ public class DbUsers {
         DbConnector.updateValueInDb(dbUpdateQuery);
     }
 
+
     //method will check if food list in the database is up to date(reset it if not) and return list of foods eaten today
     private static String returnEatenFoodsAsString(int personsId) {
 
@@ -151,6 +156,7 @@ public class DbUsers {
 
         return getCurrentFoodList(personsId, lastDate, todaysDate);
     }
+
 
     //getting the date of the last update from User's database as String
     private static String getLastDateFromDb(int personsId) {
@@ -169,12 +175,14 @@ public class DbUsers {
         return lastDate;
     }
 
+
     //getting todays date as string
     private static String getTodaysDate() {
 
-        LocalDateStringConverter dateToStringCoverter = new LocalDateStringConverter();
-        return dateToStringCoverter.toString(LocalDate.now());
+        LocalDateStringConverter dateToStringConverter = new LocalDateStringConverter();
+        return dateToStringConverter.toString(LocalDate.now());
     }
+
 
     //method check if the last update is still valid and return foods list accordingly
     private static String getCurrentFoodList(int personsId, String lastDate, String todaysDate) {

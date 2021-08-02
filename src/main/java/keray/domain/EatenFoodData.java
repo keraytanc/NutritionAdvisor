@@ -2,14 +2,14 @@ package keray.domain;
 
 import keray.logic.FoodDataConnection;
 
-//class will represent objects with informations suitable for a list of foods eaten at the given day
+//class will represent objects with information suitable for a list of foods eaten at the given day
 public class EatenFoodData {
 
-    private int fdcId;
-    private int weight;
+    private final int fdcId;
+    private final int weight;
     private FoodDataConnection connect;
-    private Food food;
-    private String description;
+    private final Food food;
+    private final String description;
 
     //constructor to retrieve weight and id data from database. Using ID it creates Food object by
     //connecting to external API

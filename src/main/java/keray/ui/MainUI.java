@@ -50,7 +50,7 @@ public class MainUI {
         foodButton.setOnAction((event) -> {
 
             layout.setCenter(foodMenuBox);
-            foodMenu.updateProgress(foodMenu.progressMenu);
+            foodMenu.formatAndUpdateProgress();
         });
 
         return layout;

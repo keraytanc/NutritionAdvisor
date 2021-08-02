@@ -10,22 +10,45 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import keray.domain.EatenFoodData;
-import keray.domain.Person;
 import keray.ui.MainUI;
-
-import java.util.ArrayList;
 
 //the class will control the mechanism of the list of the foods eaten by the user
 public class EatenFoodTable {
-    TableView table = new TableView();
+    TableView<EatenFoodData> table = new TableView<>();
     EatenFoodData foodToDelete = null;
 
     //method returns table
-    public TableView createNewTable() {
+    public TableView<EatenFoodData> createNewTable() {
 
         //Adding columns
-        TableColumn foodColumn = new TableColumn("Food");
-        TableColumn weightColumn = new TableColumn("Weight");
+        TableColumn<EatenFoodData, String> foodColumn = new TableColumn<>("Food");
+        TableColumn<EatenFoodData, String> weightColumn = new TableColumn<>("Weight");
+
+        this.formatColumns(foodColumn, weightColumn);
+
+
+        /////////ANIMATING UI//////////////////////////////////
+
+
+        //adding ability to pick food to delete
+        this.table.setRowFactory((rowFunction) -> {
+            TableRow<EatenFoodData> row = new TableRow<>();
+            row.setOnMouseClicked((click) ->{
+                if (!row.isEmpty()) {
+                    this.foodToDelete = this.table.getSelectionModel().getSelectedItem();
+                }
+            });
+            return row;
+        });
+
+
+        return this.table;
+    }
+
+    ////////////////////METHODS//////////////////////
+
+    //formatting columns
+    private void formatColumns(TableColumn<EatenFoodData, String> foodColumn, TableColumn<EatenFoodData, String> weightColumn) {
 
         //defining data type for each column
         foodColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -35,24 +58,11 @@ public class EatenFoodTable {
         foodColumn.prefWidthProperty().bind(this.table.widthProperty().multiply(0.7));
         weightColumn.minWidthProperty().bind(this.table.widthProperty().multiply(0.25));
         weightColumn.maxWidthProperty().bind(this.table.widthProperty().multiply(0.3));
-
-
         this.table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        //adding ability to pick food to delete
-        this.table.setRowFactory((rowFunction) -> {
-            TableRow<String> row = new TableRow<>();
-            row.setOnMouseClicked((click) ->{
-                if (!row.isEmpty()) {
-                    this.foodToDelete = (EatenFoodData) this.table.getSelectionModel().getSelectedItem();
-                }
-            });
-            return row;
-        });
 
         //wrapping text inside columns
         foodColumn.setCellFactory((row) -> {
-            TableCell<ArrayList, String> cell = new TableCell<>();
+            TableCell<EatenFoodData, String> cell = new TableCell<>();
             Text text = new Text();
             cell.setGraphic(text);
             text.wrappingWidthProperty().bind(foodColumn.widthProperty());
@@ -61,9 +71,10 @@ public class EatenFoodTable {
         });
 
         //adding columns to the table
-        this.table.getColumns().addAll(foodColumn, weightColumn);
+        this.table.getColumns().add(foodColumn);
+        this.table.getColumns().add(weightColumn);
 
-        return this.table;
+
     }
 
     //updates table with a list of food eaten today

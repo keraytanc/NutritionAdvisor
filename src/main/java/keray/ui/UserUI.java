@@ -34,6 +34,7 @@ public class UserUI {
         //formatting the layout into proper form
         this.formatLayout();
 
+
         //creating top menu and adding basic constant information about user
         VBox nameLabelMenu = new VBox();
         this.formatNameLabelMenu(nameLabelMenu);
@@ -42,6 +43,7 @@ public class UserUI {
         Label weightLabel = new Label("Weight: " + chosenPerson.getWeight() + "kg");
         Label waistLabel = new Label("Waist circumference: " + chosenPerson.getWaistCircumference() + "cm");
         nameLabelMenu.getChildren().addAll(weightLabel, waistLabel);
+
 
         //creating update menu
         GridPane updateMenu = new GridPane();
@@ -60,6 +62,7 @@ public class UserUI {
         //adding nodes to the update menu in proper position
         this.positionNodesInUpdateMenu(updateMenu, weightField, waistField, updateWeightButton, updateWaistButton);
 
+
         //creating the menu with nutritional advice
         VBox adviceMenu = new VBox();
         ScrollPane adviceField = new ScrollPane();
@@ -67,6 +70,7 @@ public class UserUI {
 
         //updating advice field with proper verbal advice
         this.updateAdviceField(adviceField);
+
 
         //Creating and formatting menu for choosing dietary plans
         VBox plansMenu = new VBox();
@@ -115,34 +119,34 @@ public class UserUI {
             } else if (newValue.equals("Gain weight")) {
                 kcalChangeInPercent = 10;
             }
-            chosenPerson.addIntake(kcalChangeInPercent);
+            this.chosenPerson.addIntake(kcalChangeInPercent);
             this.updateNutritionLabels();
 
-            DbUsers.updateCaloryRate(chosenPerson);
+            DbUsers.updateCalorieRate(this.chosenPerson);
         });
 
         //adding action to the buttons responsible for total nutritional demand
         lowerDemandButton.setOnAction((event) -> {
-            chosenPerson.lowerMultiplier();
+            this.chosenPerson.lowerMultiplier();
 
-            int multiplier = chosenPerson.getMultiplier();
-            DbUsers.updateMultiplier(chosenPerson, multiplier);
+            int multiplier = this.chosenPerson.getMultiplier();
+            DbUsers.updateMultiplier(this.chosenPerson, multiplier);
             this.updateNutritionLabels();
         });
 
         resetDemandButton.setOnAction((event) -> {
-            chosenPerson.resetMultiplier();
+            this.chosenPerson.resetMultiplier();
 
             int multiplier = 32;
-            DbUsers.updateMultiplier(chosenPerson, multiplier);
+            DbUsers.updateMultiplier(this.chosenPerson, multiplier);
             this.updateNutritionLabels();
         });
 
         raiseDemandButton.setOnAction((event) -> {
-            chosenPerson.raiseMultiplier();
+            this.chosenPerson.raiseMultiplier();
 
-            int multiplier = chosenPerson.getMultiplier();
-            DbUsers.updateMultiplier(chosenPerson, multiplier);
+            int multiplier = this.chosenPerson.getMultiplier();
+            DbUsers.updateMultiplier(this.chosenPerson, multiplier);
             this.updateNutritionLabels();
         });
 
@@ -278,9 +282,9 @@ public class UserUI {
 
         //view of the initial choice according to the data in Person object
         String initialChoice = "Reduce weight";
-        if (chosenPerson.getCaloryRate() == 1) {
+        if (chosenPerson.getCalorieRate() == 1) {
             initialChoice = "Maintain weight";
-        } else if (chosenPerson.getCaloryRate() > 1) {
+        } else if (chosenPerson.getCalorieRate() > 1) {
             initialChoice = "Gain weight";
         }
         plansChoices.setValue(initialChoice);
