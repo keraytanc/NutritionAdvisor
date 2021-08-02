@@ -17,6 +17,7 @@
           <li><a href="#The-food-screen">The food screen</a></li>
         </ul>
       </li>
+      <li><a href="#Sources">Sources</a></li>
     </ol>
   </details>
 
