@@ -28,7 +28,7 @@
   <!-- TECHNICAL INFORMATION -->
 ## Technical information
 
-Independent program written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user information are stored in the local MySQL database<a href="#Sources"><sup>e.g.</sup></a>.
+Independent program written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user data are stored in the local MySQL database<a href="#Sources"><sup>e.g.</sup></a>.
 
 <!-- ABOUT THE PROJECT -->
 ## About the project
