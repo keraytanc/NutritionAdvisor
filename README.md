@@ -4,9 +4,7 @@
   <details open="open">
     <summary>Table of Contents</summary>
     <ol>
-      <li>
-        <a href="#foreword">Foreword</a>
-      </li>
+      <li><a href="#Technical-information">Technical information</a></li>
       <li>
         <a href="#about-the-project">About The Project</a>
       </li>
@@ -19,7 +17,6 @@
           <li><a href="#The-food-screen">The food screen</a></li>
         </ul>
       </li>
-      <li><a href="#Technical-information">Technical information</a></li>
     </ol>
   </details>
 
@@ -27,12 +24,10 @@
     <img src="https://i.imgur.com/JZl5k3Y.gif" />
   </p>
   
-<!-- FOREWORD -->
-## Foreword
+  <!-- TECHNICAL INFORMATION -->
+## Technical information
 
-As a self-taught java developer, I felt quite confident with the Java basics I learned with the content provided by the University of Helsinki’s Java course. During the study, I made countless exercises, some simple, other very complex, many of them were done independently of any help. But all of them were designed by someone else. Someone who made sure that the execution of the exercise wouldn’t exceed the content of the course. That’s why I decided to create something that would be fully independent. That would be created solely according to my vision from the first to the last step. I consciously decided to include within it topics I wasn’t capable of doing yet at that point. I wanted the program to not only be another project in my portfolio but a learning experience. I didn’t have at my disposal anything besides Google search engine and my curiosity.
-
-After long deliberation, I decided that it will be a dietary program. I already had knowledge of the topic, I knew such a program could be useful to myself and that it would help me to face new challenges, making me a better Java developer. 
+Independent program written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user information are stored in the local MySQL database<a href="#Sources"><sup>e.g.</sup></a>.
 
 <!-- ABOUT THE PROJECT -->
 ## About the project
@@ -78,14 +73,8 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 
 **The food screen** is the screen responsible for tracking user’s everyday food consumption. In the upper part of the screen, the user can search for the particular product. After choosing the product from the result list with a double-click user enters the weight of the consumed product. The table below shows the total nutritious value of the chosen food. After that user can confirm it with the „Add button” and add meal to the daily food list which is placed in the bottom part of the interface. Food will appear in the list of "foods eaten today"(the list resets itself every day). The user can delete the food from the list as well. At the bottom of the screen, progress bars show how much nutritional needs of the user have been met on a given day. It’s important to keep in mind that the required calories intake is a rigid number hence the user should aim to accurately reach(and not exceed) the number every day but other macronutrients are just a minimum required value. There is no problem in exceeding the numbers as long as total calories intake isn’t affected
 
-<!-- TECHNICAL INFORMATION -->
-## Technical information
 
- The program is written in Java 11 and JavaFX. Food search engine and all the information about foods are taken through the REST API provided by **U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019.** http://fdc.nal.usda.gov  All the user information are stored in the local MySQL database.
 
-<p align="center">
-  <img src="https://i.imgur.com/mLiB70y.png" />
-</p>
 
 
 #### Sources:
@@ -94,3 +83,8 @@ So here comes the Nutrition Advisor. Update your weight and waist circumference 
 1) https://pubmed.ncbi.nlm.nih.gov/18025815/
 <br>2) https://www.nature.com/articles/s41598-018-29362-1</br>
 </sup>
+
+<p align="center">
+  <img src="https://i.imgur.com/mLiB70y.png" />
+</p>
+
