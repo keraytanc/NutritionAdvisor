@@ -24,24 +24,7 @@ public class Person {
 
     //constructor to add a new user
     public Person(String name, int height, int weight, int waistCircumference, int multiplier, double calorieRate) {
-        this.id = 0;
-        this.name = name;
-
-        if (weight > 700) { weight = 700; }
-        if (weight < 30) { weight = 30; }
-        this.weight = weight;
-        this.waistCircumference = waistCircumference;
-
-        if (height > 300) { height = 300; }
-        if (height < 40) { height = 40; }
-        this.height = height;
-        this.multiplier = multiplier;
-        this.calorieRate = calorieRate;
-        this.kcalDemand = Math.toIntExact(Math.round(weight * this.multiplier * calorieRate));
-        this.minProtein = Math.toIntExact(Math.round(weight * 1.8));
-        this.minFats = Math.toIntExact(Math.round(weight * this.multiplier * 0.0234375 * calorieRate));
-        this.minCarbs = Math.toIntExact(Math.round(weight * this.multiplier * 0.05 * calorieRate));
-        this.eatenToday = new ArrayList<>();
+        this(0, name, height, weight, waistCircumference, multiplier, calorieRate);
     }
 
     //constructor to retrieve user from database

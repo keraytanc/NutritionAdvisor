@@ -57,11 +57,12 @@ public class DbUsers {
         double waist = person.getWaistCircumference();
         int multiplier = person.getMultiplier();
         double calorieRate = person.getCalorieRate();
+        String lastDate = getTodaysDate();
 
         //using data to create a query
-        String dbQuery = "INSERT INTO users(username, userheight, userweight, userwaist, usermultiplier, usercaloryrate) " +
+        String dbQuery = "INSERT INTO users(username, userheight, userweight, userwaist, usermultiplier, usercaloryrate, lastdate) " +
                 "VALUES ('" + name + "', " + height + ", " + weight + ", " + waist + ", " +
-                multiplier + ", " + calorieRate + ")";
+                multiplier + ", " + calorieRate + ", '" + lastDate + "')";
 
         //sending a query and effectively adding user to the DB. Setting sql generated ID to the java object
         int personsId = DbConnector.addingNewRecordToDb(dbQuery);
@@ -113,11 +114,17 @@ public class DbUsers {
     //method will retrieve an ArrayList of foods eaten today from the database
     public static ArrayList<EatenFoodData> retrieveEatenFoodsFromDb(int personsId) {
 
-        //Eaten foods String retrieved from Database
-        String foodListAsString = returnEatenFoodsAsString(personsId);
+        String foodListAsString = "";
+
+        //if personsId = 0 it means that new person is created in person hence empty ArrayList should be returned
+        if (personsId != 0) {
+            //Eaten foods String retrieved from Database
+            foodListAsString = returnEatenFoodsAsString(personsId);
+        }
 
         //new ArrayList
         ArrayList<EatenFoodData> eatenFood = new ArrayList<>();
+
 
         //if the String is empty, an empty Arraylist is returned. Otherwise list of EatenFoodData objects is returned
         if (!foodListAsString.isEmpty()) {
@@ -187,7 +194,7 @@ public class DbUsers {
     //method check if the last update is still valid and return foods list accordingly
     private static String getCurrentFoodList(int personsId, String lastDate, String todaysDate) {
         //comparing todays date with the last date in database
-        if (lastDate.equals(todaysDate)) {
+        if (lastDate.equals(todaysDate) && personsId != 0) {
 
             //if true method returns current food list
             String foodList = "";
@@ -196,6 +203,11 @@ public class DbUsers {
             try {
                 resultFoodList.next();
                 foodList = resultFoodList.getString("eatenfood");
+
+                //in case of null return empty String
+                if (foodList == null) {
+                    foodList = "";
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

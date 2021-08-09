@@ -20,23 +20,23 @@ public class Food {
 
     //Different methods to get Nutritional values of the chosen food(each micronutrient type has ID).
     public double getKcal() {
-        return this.getValue(1008);
+        return this.getNutrientValue(1008);
     }
     public double getProteins() {
-        return this.getValue(1003);
+        return this.getNutrientValue(1003);
     }
     public double getFats() {
-        return this.getValue(1004);
+        return this.getNutrientValue(1004);
     }
     public double getCarbs() {
-        return this.getValue(1005);
+        return this.getNutrientValue(1005);
     }
 
     //getting ID
     public Integer getId() { return this.fdcId; }
 
     //method used to return the value of either kcal, fats, carbs or protein based on nutrientID
-    private double getValue(int nutrientID) {
+    private double getNutrientValue(int nutrientID) {
 
         for (FoodNutrients nutrient : this.getNutrientsList()) {
             if (nutrient.returnNutrientId() == nutrientID) {

@@ -330,10 +330,15 @@ public class AddingFoodUI {
         //progress bars
         ProgressBar kcalBar = new ProgressBar(1.0 * MainUI.getUser().getKcalEatenToday() / MainUI.getUser().getKcalDemand());
         kcalBar.setStyle("-fx-accent: red");
+        kcalBar.prefWidthProperty().bind(layout.widthProperty().add(-190));
 
         ProgressBar protBar = new ProgressBar(1.0 * MainUI.getUser().getProtEatenToday() / MainUI.getUser().getMinProtein());
         ProgressBar fatBar = new ProgressBar(1.0 * MainUI.getUser().getFatEatenToday() / MainUI.getUser().getMinFats());
         ProgressBar carbBar = new ProgressBar(1.0 * MainUI.getUser().getCarbEatenToday() / MainUI.getUser().getMinCarbs());
+
+        protBar.prefWidthProperty().bind(layout.widthProperty().add(-190));
+        fatBar.prefWidthProperty().bind(layout.widthProperty().add(-190));
+        carbBar.prefWidthProperty().bind(layout.widthProperty().add(-190));
 
 
         //Labels with numerical progress
