@@ -32,7 +32,7 @@ Independent program written in Java 11 and JavaFX. Food search engine and all th
 
 <!-- ABOUT THE PROJECT -->
 ## About the project
-
+ 
 The idea for the program stemmed from the particular dietary approach that is simple to follow, precise in its methods and effective in its results. Most of the diets are bombarding us with an endless amount of details and nuances. Following them require us to submit our lives, thoughts and time solely to cooking and food consumption. While such a strict approach could sometimes bring quick results, it’s very ineffective in a long term. Cooking fancy low-calory meals every day and abstaining from eating in social situations is doable in the period of 2-3 months, sometimes it is even fun but can we live our lives like that forever? Most of us don’t. We prefer spending time with family, friends, our hobbies or simply Netflix instead of cooking another low-carb cheesecake for 2 hours.
 
 The secret to an effective diet is to forget about all the irrelevant details that consume a lot of our time and contribute near to nothing to the end result. Scientific research clearly shows that diet is a numbers game<a href="#Sources"><sup>1</sup></a>: it doesn’t matter if you eat low-carb, high-carb or only during particular hours. In the end, it’s a simple equation: do you burn more calories than you consume? If yes you can lose weight while eating pizza and chocolate. To stay healthy and preserve muscles one must also consume some reasonable minimum amount of all macronutrients: carbohydrates, fats and proteins. All other things are irrelevant.
