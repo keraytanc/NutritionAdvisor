@@ -41,7 +41,7 @@ Another important part of losing, gaining or maintaining your weight is tracking
 
 So here comes the Nutrition Advisor. Update your weight and waist circumference at least once a week and allow the program to do the thinking and calculating for you. Thanks to its functionality it will give you feedback to help you define your goals. It also estimates all your dietary requirements to make following the diet possibly easy for you to follow. Restricting its prescriptions to only a few numbers gives you freedom. You can keep following your diet regardless if it’s free Sunday that you can spend cooking, busy and long day at work where you can eat only fast foods or a social gathering with your friends.
  
- You may ask: „How am I going to track all those foods that I eat? I have no idea how many calories or proteins they have”. Don’t worry; Nutrition Advisor does that as well. Just make sure you enter right away any food you eat into the program It will calculate and track everything for you. You will know how much you have eaten and how much more you can eat.
+ You may ask: „How am I going to track all those foods that I eat? I have no idea how many calories or proteins they have”. Don’t worry; Nutrition Advisor does that as well. Just make sure you enter right away any food you eat into the program and it will calculate and track everything for you. You will know how much you have eaten and how much more you can eat.
 
 <!-- HOW TO USE? -->
 ## How to use? 
